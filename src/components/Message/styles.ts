@@ -1,6 +1,5 @@
 import {StyleSheet} from 'react-native';
 import {FontFamily, ScreenUtils} from 'airtour-components';
-import {CHAT_LIST_ITEM_IMAGE_WIDTH} from '../../../ChatList/styles';
 
 export const MESSAGE_CONTAINER_RADIUS = 6;
 export const styles = StyleSheet.create({
@@ -44,8 +43,8 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   messageAvatar: {
-    height: CHAT_LIST_ITEM_IMAGE_WIDTH,
-    width: CHAT_LIST_ITEM_IMAGE_WIDTH,
+    height: 55,
+    width: 55,
     borderRadius: 8,
   },
   messageDateTextStyle: {
