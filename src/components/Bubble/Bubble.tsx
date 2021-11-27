@@ -308,8 +308,8 @@ const UserProvider: FC<any> = props => {
 };
 
 const RenderReplyLength = memo((props: any) => {
-  const route = useRoute();
-  const {group, writable} = route?.params;
+  // const route = useRoute();
+  // const {group, writable} = route?.params;
   return (
     <TouchableWithoutFeedback
       onPress={() => {
