@@ -1,5 +1,5 @@
 import React, {memo, useCallback, useEffect, useRef} from 'react';
-import {Actions, Composer, Send} from 'react-native-gifted-chat';
+import {Composer, Send} from 'react-native-gifted-chat';
 import {styles} from './styles';
 import {
   Button,
@@ -12,24 +12,23 @@ import {
 import {
   InteractionManager,
   Keyboard,
-  StyleSheet,
   TextInput,
   View,
 } from 'react-native';
-import {
-  getFileExtension,
-  getFileName,
-} from 'airtour-components/src/utils/Other';
+// import {
+//   getFileExtension,
+//   getFileName,
+// } from 'airtour-components/src/utils/Other';
 import {ReplyMessageAndAttachment} from './ReplyMessageAndAttachment';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {getInputFlexDirectionByText} from 'airtour-components/src/utils/StringUtils';
 import {SimpleLayoutAnimations} from 'airtour-components/src/utils/SimpleLayoutAnimations';
 import {randomId} from 'airtour-components/src/utils/RandomId';
 import {sleep} from 'airtour-components/src/utils/AsyncUtils';
-import {FetchBlobClient} from 'airtour-components/src/utils/FetchBlob';
-import {FileServiceClient} from 'airtour-components/src/utils/FileAndImageService';
+// import {FetchBlobClient} from 'airtour-components/src/utils/FetchBlob';
+// import {FileServiceClient} from 'airtour-components/src/utils/FileAndImageService';
 import {IMessageModel} from '../../model/Chat/Message';
-import {useChatHook} from '../../hooks/useChatHook';
+// import {useChatHook} from '../../hooks/useChatHook';
 const INPUT_RADIUS = 25;
 
 export const RenderInputToolbar = (props: any) => {
@@ -279,77 +278,77 @@ export const RenderInputToolbar = (props: any) => {
   );
 };
 
-export const RenderActions = memo((props: any) => {
-  const {setImgUrl, setFile} = useChatHook();
-  return (
-    <View
-      style={StyleSheet.flatten([
-        GlobalStyles.flexRow,
-        GlobalStyles.fullCenter,
-      ])}>
-      <Actions
-        {...props}
-        containerStyle={styles.actionStyle}
-        icon={() => (
-          <Icon
-            type={'material-community'}
-            name={'attachment'}
-            color={'#7f7f7f'}
-            iconStyle={styles.actionIconStyle}
-          />
-        )}
-        options={{
-          'Choose Photo from Gallery': () => {
-            FileServiceClient.pickImage().then(image => {
-              setImgUrl({
-                path: image?.path,
-                type: image?.mime || 'image/jpeg',
-                extension: getFileExtension(image?.path as string) ?? 'jpeg',
-              });
-              props?.onSelectFile();
-            });
-          },
-          'Take Picture': () => {
-            FileServiceClient.takePicture().then(image => {
-              setImgUrl({
-                path: image?.path,
-                type: image?.mime || 'image/jpeg',
-                extension: getFileExtension(image?.path as string) ?? 'jpeg',
-              });
-              props?.onSelectFile();
-            });
-          },
-          'Choose File': () => {
-            FileServiceClient.pickFile().then(async file => {
-              const fileAsset = {
-                path: file?.uri,
-                type: file?.type || 'text/plain',
-                name: file?.name,
-                size: file?.size,
-                extension: file?.name ? getFileExtension(file.name) : null,
-                uri: null,
-              };
-              if (!fileAsset?.size || !fileAsset?.name) {
-                try {
-                  const fileStat = await FetchBlobClient.getFileStat(file?.uri);
-                  fileAsset.size = fileStat?.size || 1024;
-                  fileAsset.name = fileStat?.filename || getFileName(file?.uri);
-                  fileAsset.extension =
-                    getFileExtension(fileStat?.filename) ?? 'file';
-                } catch (_) {}
-              }
-              setFile(fileAsset as any);
-              props?.onSelectFile();
-            });
-          },
-          Cancel: () => {},
-        }}
-        optionTintColor="#222B45"
-      />
-      {/*<RecordAudio />*/}
-    </View>
-  );
-});
+// export const RenderActions = memo((props: any) => {
+//   const {setImgUrl, setFile} = useChatHook();
+//   return (
+//     <View
+//       style={StyleSheet.flatten([
+//         GlobalStyles.flexRow,
+//         GlobalStyles.fullCenter,
+//       ])}>
+//       <Actions
+//         {...props}
+//         containerStyle={styles.actionStyle}
+//         icon={() => (
+//           <Icon
+//             type={'material-community'}
+//             name={'attachment'}
+//             color={'#7f7f7f'}
+//             iconStyle={styles.actionIconStyle}
+//           />
+//         )}
+//         options={{
+//           'Choose Photo from Gallery': () => {
+//             FileServiceClient.pickImage().then(image => {
+//               setImgUrl({
+//                 path: image?.path,
+//                 type: image?.mime || 'image/jpeg',
+//                 extension: getFileExtension(image?.path as string) ?? 'jpeg',
+//               });
+//               props?.onSelectFile();
+//             });
+//           },
+//           'Take Picture': () => {
+//             FileServiceClient.takePicture().then(image => {
+//               setImgUrl({
+//                 path: image?.path,
+//                 type: image?.mime || 'image/jpeg',
+//                 extension: getFileExtension(image?.path as string) ?? 'jpeg',
+//               });
+//               props?.onSelectFile();
+//             });
+//           },
+//           'Choose File': () => {
+//             FileServiceClient.pickFile().then(async file => {
+//               const fileAsset = {
+//                 path: file?.uri,
+//                 type: file?.type || 'text/plain',
+//                 name: file?.name,
+//                 size: file?.size,
+//                 extension: file?.name ? getFileExtension(file.name) : null,
+//                 uri: null,
+//               };
+//               if (!fileAsset?.size || !fileAsset?.name) {
+//                 try {
+//                   const fileStat = await FetchBlobClient.getFileStat(file?.uri);
+//                   fileAsset.size = fileStat?.size || 1024;
+//                   fileAsset.name = fileStat?.filename || getFileName(file?.uri);
+//                   fileAsset.extension =
+//                     getFileExtension(fileStat?.filename) ?? 'file';
+//                 } catch (_) {}
+//               }
+//               setFile(fileAsset as any);
+//               props?.onSelectFile();
+//             });
+//           },
+//           Cancel: () => {},
+//         }}
+//         optionTintColor="#222B45"
+//       />
+//       {/*<RecordAudio />*/}
+//     </View>
+//   );
+// });
 
 export const RenderComposer = memo((props: any) => (
   <View
