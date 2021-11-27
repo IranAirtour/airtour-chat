@@ -9,12 +9,7 @@ import {
   flatten,
   GlobalStyles,
 } from 'airtour-components';
-import {
-  InteractionManager,
-  Keyboard,
-  TextInput,
-  View,
-} from 'react-native';
+import {InteractionManager, Keyboard, TextInput, View} from 'react-native';
 // import {
 //   getFileExtension,
 //   getFileName,
