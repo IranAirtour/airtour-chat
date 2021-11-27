@@ -1,28 +1,28 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import FileViewer from 'react-native-file-viewer';
-import { ToastHandlerClient } from '../../../../utils/Toast';
-import { FetchBlobClient } from '../../../../utils/FetchBlob';
-import { PermissionHandlerClient } from '../../../../utils/PermissionHandler';
-import { useAppDispatch, useAppSelector } from '../../../../redux/store';
-import { addDownloadedAttachment } from '../../../../redux/slices/groupSlice';
-import { logWarn } from '../../../../utils/Logger';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import {FileViewer} from 'airtour-components';
+import {PermissionHandlerClient} from 'airtour-components/src/utils/PermissionHandler';
+import {useAppDispatch, useAppSelector} from '../../redux/store';
+import {addDownloadedAttachment} from '../../redux/slices/groupSlice';
+import {logWarn} from 'airtour-components/src/utils/Logger';
+import {FetchBlobClient} from 'airtour-components/src/utils/FetchBlob';
+import {ToastHandlerClient} from 'airtour-components/src/utils/Toast';
 
 type NullableString = string | null;
 type NullableNumber = number | null;
 
 const IFileResource = {
-  NOT_EXISTED: { icon: 'download-outline' },
-  EXISTED: { icon: 'checkmark' },
-  DOWNLOADING: { icon: '' },
-  DOWNLOAD_FAILED: { icon: 'reload' },
+  NOT_EXISTED: {icon: 'download-outline'},
+  EXISTED: {icon: 'checkmark'},
+  DOWNLOADING: {icon: ''},
+  DOWNLOAD_FAILED: {icon: 'reload'},
 };
 
 export const useDownloadFileHook = (props: any) => {
   const dispatch = useAppDispatch();
   const [taskId, setTaskId] = React.useState<NullableString>(null);
   const [downloadProgress, setDownloadProgress] = useState<NullableNumber>(100);
-  const { file } = props?.currentMessage ?? props ?? {};
-  const { id: attachmentId, uri, name, type, mimeType } = file ?? {};
+  const {file} = props?.currentMessage ?? props ?? {};
+  const {id: attachmentId, uri, name, type, mimeType} = file ?? {};
   const [fileStatus, setFileStatus] = useState(IFileResource.NOT_EXISTED);
   const fileUri = uri;
   const fullName = (name || '') + '.' + (type || mimeType || '');
