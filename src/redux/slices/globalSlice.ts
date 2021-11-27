@@ -5,6 +5,7 @@ import {REDUCER_NAMES} from '../contants';
 const initialState: IGlobalReducerModel = {
   userProfile: null,
   groupId: null,
+  group: null,
   accessToken: null,
   mediaUrl: null,
   currentApplication: null,

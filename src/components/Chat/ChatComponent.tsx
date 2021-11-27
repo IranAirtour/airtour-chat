@@ -5,7 +5,7 @@ import {RenderInputToolbar} from '../InputBar/InputBar';
 import {parsePatterns, RenderMessage} from '../renderMessage';
 import {ActivityIndicator} from 'react-native';
 import {RenderDay} from '../renderDay';
-import {useChatHook} from '../../hooks/useChatHook';
+// import {useChatHook} from '../../hooks/useChatHook';
 import {useFileSheet} from 'airtour-components';
 import {IMessageModel} from '../../model/Chat/Message';
 import {ScrollToBottom} from '../ScrollToBottom';
@@ -20,6 +20,7 @@ export const ChatComponent = (props: IChatProps) => {
     userProfile,
     messages,
     writable,
+    chatHookProvider,
   } = props;
 
   const {
@@ -34,7 +35,8 @@ export const ChatComponent = (props: IChatProps) => {
     setReply,
     setFile,
     retrySendMessage,
-  } = useChatHook();
+  } = chatHookProvider;
+  // } = useChatHook();
 
   const {
     fileSheetRef,
