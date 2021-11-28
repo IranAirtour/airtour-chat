@@ -1,8 +1,8 @@
-import { StyleSheet } from 'react-native';
-import { FontFamily, ScreenUtils } from 'airtour-components';
+import {StyleSheet} from 'react-native';
+import {FontFamily, ScreenUtils} from 'airtour-components';
 
-export const FILE_IMAGE_WIDTH = 45;
-export const IMAGE_WIDTH = 45;
+export const FILE_IMAGE_WIDTH = 36;
+export const IMAGE_WIDTH = 36;
 
 export const styles = StyleSheet.create({
   container: {

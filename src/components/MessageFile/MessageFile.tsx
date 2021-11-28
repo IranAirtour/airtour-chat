@@ -89,8 +89,8 @@ const BaseMessageFile = memo((props: any) => {
                 GlobalStyles.flex1,
                 {
                   position: 'absolute',
-                  width: IMAGE_WIDTH * 1.5,
-                  height: IMAGE_WIDTH * 1.5,
+                  width: IMAGE_WIDTH * 1.25,
+                  height: IMAGE_WIDTH * 1.25,
                   // backgroundColor: 'red',
                 },
               ])}>

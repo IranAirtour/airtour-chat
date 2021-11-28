@@ -1,11 +1,11 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {FileViewer} from 'airtour-components';
 import {PermissionHandlerClient} from 'airtour-components/src/utils/PermissionHandler';
 import {useAppDispatch, useAppSelector} from '../../redux/store';
 import {addDownloadedAttachment} from '../../redux/slices/groupSlice';
 import {logWarn} from 'airtour-components/src/utils/Logger';
 import {FetchBlobClient} from 'airtour-components/src/utils/FetchBlob';
 import {ToastHandlerClient} from 'airtour-components/src/utils/Toast';
+import {FileViewerClient} from 'airtour-components/src/utils/FileViewer';
 
 type NullableString = string | null;
 type NullableNumber = number | null;
@@ -87,7 +87,7 @@ export const useDownloadFileHook = (props: any) => {
 
   const openFile = useCallback(
     fileToOpen => {
-      FileViewer.open(fileToOpen || pathToFile).catch(() => {
+      FileViewerClient.open(fileToOpen || pathToFile).catch(() => {
         ToastHandlerClient.show('format denied');
       });
     },

@@ -16,6 +16,7 @@ const ProgressPercent = memo((props: IProps) => {
     const progress = Math.min(100, uploadProgress, downloadProgress);
     return (
       <Text
+        h6
         style={StyleSheet.flatten([
           GlobalStyles.centerText,
           styles.progressText,
@@ -32,9 +33,8 @@ export {ProgressPercent};
 export const styles = StyleSheet.create({
   progressText: {
     fontFamily: FontFamily.NunitoBold,
-    fontSize: ScreenUtils.scaleFontSize(15),
     textAlign: 'center',
-    color: '#FFF',
+    color: '#153D76',
     position: 'absolute',
   },
 });
