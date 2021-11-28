@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {IChatProps} from '../../model/IChatProps';
 import {GiftedChat} from '../GiftedChat/GiftedChat';
 import {RenderInputToolbar} from '../InputBar/InputBar';
@@ -9,9 +9,11 @@ import {RenderDay} from '../renderDay';
 import {FileBottomSheet, useFileSheet} from 'airtour-components';
 import {IMessageModel} from '../../model/Chat/Message';
 import {ScrollToBottom} from '../ScrollToBottom';
-import {useAppSelector} from '../../redux/store';
+import {useAppDispatch, useAppSelector} from '../../redux/store';
+import {userProfileReceived} from '../../redux/slices/globalSlice';
 
 export const ChatComponent = (props: IChatProps) => {
+  const dispatch = useAppDispatch();
   const {
     applicationName,
     accessToken,
@@ -45,6 +47,11 @@ export const ChatComponent = (props: IChatProps) => {
     fileBottomSheetIsOpen,
     fileBottomSheetAnimatedValue,
   } = useFileSheet();
+
+  // TEMP: update received userProfile from props to app global slice to use in chat app.
+  useEffect(() => {
+    dispatch(userProfileReceived({userProfile}));
+  }, [dispatch, userProfile]);
 
   const chatReplyMessage = useAppSelector(state => state.chat.reply);
   const chatReplyAttachment = useAppSelector(state => state.chat.replyFile);

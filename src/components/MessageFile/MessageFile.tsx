@@ -12,6 +12,9 @@ import {
 import LottieView from 'lottie-react-native';
 import animations from '../../assets/animations';
 import {ProgressPercent} from '../ProgressPercent';
+import {useAppSelector} from '../../redux/store';
+import {IUserProfile} from '../../model/User/IUserProfile';
+import {useUserHook} from '../../hooks/useUserHook';
 // import {ProgressPercent} from './ProgressPercent';
 
 const BaseMessageFile = memo((props: any) => {
@@ -19,6 +22,15 @@ const BaseMessageFile = memo((props: any) => {
   const extension = currentMessage.file?.extension ?? null;
   const {onFilePress, downloadProgress, downloadTaskId, fileStatus} =
     useDownloadFileHook(props);
+
+  const isLeftSide = position === 'left';
+  const {userId} = currentMessage;
+  const userMemo = useUserHook(null, userId);
+  const userProfile: IUserProfile | null = useAppSelector(
+    state => state.global.userProfile,
+  );
+  const isMyUser = userMemo?._id === userProfile?._id || !isLeftSide;
+
   // const animRef = useRef<LottieView>(null);
   // const iconName: string = useMemo(() => {
   //   if (extension?.indexOf('image') > -1) {
@@ -51,12 +63,13 @@ const BaseMessageFile = memo((props: any) => {
     () => formatBytes(currentMessage.file?.size || 0),
     [currentMessage.file?.size],
   );
-  const isLeftSide = position === 'left';
+
   return (
     <TouchableWithoutFeedback onPress={onFilePress}>
       <View
         style={StyleSheet.flatten([
           styles.container,
+          {backgroundColor: isMyUser ? 'rgba(62,96,143,0.7)' : '#F3F7FC'},
           // isLeftSide ? { backgroundColor: '#F3F7FC' } : {},
           props?.fileContainerStyle || {},
         ])}>

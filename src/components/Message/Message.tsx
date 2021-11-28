@@ -208,7 +208,8 @@ const MessageViewContainer: FC<any> = props => {
       <View
         style={flatten([
           {
-            flexDirection: isLeftPosition ? 'row' : 'row-reverse',
+            flexDirection: isMyUser ? 'row-reverse' : 'row',
+            // flexDirection: isLeftPosition ? 'row' : 'row-reverse',
             marginHorizontal: 8,
           },
         ])}>
