@@ -6,7 +6,7 @@ import {parsePatterns, RenderMessage} from '../renderMessage';
 import {ActivityIndicator} from 'react-native';
 import {RenderDay} from '../renderDay';
 // import {useChatHook} from '../../hooks/useChatHook';
-import {useFileSheet} from 'airtour-components';
+import {FileBottomSheet, useFileSheet} from 'airtour-components';
 import {IMessageModel} from '../../model/Chat/Message';
 import {ScrollToBottom} from '../ScrollToBottom';
 import {useAppSelector} from '../../redux/store';
@@ -83,51 +83,62 @@ export const ChatComponent = (props: IChatProps) => {
   );
 
   return (
-    <GiftedChat
-      messages={messages}
-      onViewableItemsChanged={onViewableItemsChangedCallBack}
-      inverted={true}
-      user={userProfile}
-      alignTop={false}
-      infiniteScroll
-      alwaysShowSend
-      showAvatarForEveryMessage={true}
-      showUserAvatar={false}
-      renderAvatarOnTop
-      renderUsernameOnMessage
-      keyboardShouldPersistTaps="never"
-      renderInputToolbar={(toolbarProps: any) => (
-        <RenderInputToolbar
-          scrollToBottom={toolbarProps?.scrollToBottom}
-          inputText={chatInputText}
-          onInputTextChanged={setChatTextInput}
-          chatReplyMessage={chatReplyMessage}
-          chatReplyAttachment={chatReplyAttachment}
-          onSend={onSend}
-          setReply={setReply}
-          setFile={setFile}
-          appendReplyToMessage={true}
-          showInputBar={writable}
-          snapFileBottomSheetTo={snapFileBottomSheetTo}
-        />
-      )}
-      renderMessage={(messageProps: any) => (
-        <RenderMessage
-          {...messageProps}
-          group={groupId}
-          // group={group}
-          retrySendMessage={retrySendMessage}
-        />
-      )}
-      renderDay={(dayProps: any) => <RenderDay {...dayProps} />}
-      renderLoading={() => <ActivityIndicator />}
-      parsePatterns={parsePatterns}
-      setReplyMessage={onReplyMessageCallback}
-      deleteMessage={deleteMessageCallback}
-      onStartReached={onStartReached}
-      onEndReached={onEndReached}
-      ScrollToBottom={ScrollToBottom}
-      lastSeenMessageId={lastSeenMessageId}
-    />
+    <>
+      <GiftedChat
+        messages={messages}
+        onViewableItemsChanged={onViewableItemsChangedCallBack}
+        inverted={true}
+        user={userProfile}
+        alignTop={false}
+        infiniteScroll
+        alwaysShowSend
+        showAvatarForEveryMessage={true}
+        showUserAvatar={false}
+        renderAvatarOnTop
+        renderUsernameOnMessage
+        keyboardShouldPersistTaps="never"
+        renderInputToolbar={(toolbarProps: any) => (
+          <RenderInputToolbar
+            scrollToBottom={toolbarProps?.scrollToBottom}
+            inputText={chatInputText}
+            onInputTextChanged={setChatTextInput}
+            chatReplyMessage={chatReplyMessage}
+            chatReplyAttachment={chatReplyAttachment}
+            onSend={onSend}
+            setReply={setReply}
+            setFile={setFile}
+            appendReplyToMessage={true}
+            showInputBar={writable}
+            snapFileBottomSheetTo={snapFileBottomSheetTo}
+          />
+        )}
+        renderMessage={(messageProps: any) => (
+          <RenderMessage
+            {...messageProps}
+            group={groupId}
+            // group={group}
+            retrySendMessage={retrySendMessage}
+          />
+        )}
+        renderDay={(dayProps: any) => <RenderDay {...dayProps} />}
+        renderLoading={() => <ActivityIndicator />}
+        parsePatterns={parsePatterns}
+        setReplyMessage={onReplyMessageCallback}
+        deleteMessage={deleteMessageCallback}
+        onStartReached={onStartReached}
+        onEndReached={onEndReached}
+        ScrollToBottom={ScrollToBottom}
+        lastSeenMessageId={lastSeenMessageId}
+      />
+      <FileBottomSheet
+        ref={fileSheetRef}
+        snapBottomSheetTo={snapFileBottomSheetTo}
+        setBottomSheetAnimatedValue={setFileBottomSheetAnimatedValue}
+        bottomSheetIsOpen={fileBottomSheetIsOpen}
+        bottomSheetAnimatedValue={fileBottomSheetAnimatedValue}
+        onCameraPress={setFile}
+        onGalleryPress={setFile}
+      />
+    </>
   );
 };
