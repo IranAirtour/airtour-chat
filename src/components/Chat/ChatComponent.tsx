@@ -11,6 +11,7 @@ import {IMessageModel} from '../../model/Chat/Message';
 import {ScrollToBottom} from '../ScrollToBottom';
 import {useAppDispatch, useAppSelector} from '../../redux/store';
 import {userProfileReceived} from '../../redux/slices/globalSlice';
+import {usersReceived} from '../../redux/slices/userSlice';
 
 export const ChatComponent = (props: IChatProps) => {
   const dispatch = useAppDispatch();
@@ -57,6 +58,11 @@ export const ChatComponent = (props: IChatProps) => {
   useEffect(() => {
     dispatch(userProfileReceived({userProfile}));
   }, [dispatch, userProfile]);
+
+  // TEMP: update received userList from props to app user slice to use in chat app.
+  useEffect(() => {
+    dispatch(usersReceived({list: userList}));
+  }, [dispatch, userList]);
 
   const chatReplyMessage = useAppSelector(state => state.chat.reply);
   const chatReplyAttachment = useAppSelector(state => state.chat.replyFile);
