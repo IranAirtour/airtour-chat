@@ -57,12 +57,14 @@ export const ChatComponent = (props: IChatProps) => {
   // TEMP: update received userProfile from props to app global slice to use in chat app.
   useEffect(() => {
     dispatch(userProfileReceived({userProfile}));
-  }, [dispatch, userProfile]);
+  }, [userProfile]);
 
   // TEMP: update received userList from props to app user slice to use in chat app.
   useEffect(() => {
-    dispatch(usersReceived({list: userList}));
-  }, [dispatch, userList]);
+    setTimeout(() => {
+      dispatch(usersReceived({list: userList}));
+    }, 1000);
+  }, [userList]);
 
   const chatReplyMessage = useAppSelector(state => state.chat.reply);
   const chatReplyAttachment = useAppSelector(state => state.chat.replyFile);
