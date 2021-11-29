@@ -296,7 +296,8 @@ const BubbleViewContainer = memo((props: any) => {
 const UserProvider: FC<any> = props => {
   const {currentMessage, position} = props;
   const {userId} = currentMessage;
-  const userMemo = useUserHook(null, userId);
+  const userMemo = useUserHook(currentMessage?.user, userId);
+  // const userMemo = useUserHook(null, userId);
   const isRightPosition = position === 'right';
   return isRightPosition ? null : (
     <Text
