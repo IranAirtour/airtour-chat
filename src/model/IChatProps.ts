@@ -17,14 +17,22 @@ export type IChatHookProvider = {
   retrySendMessage?: Function;
 };
 
+export type INavigateToThreadParams = {
+  message?: IMessageModel;
+  group: IGroupItem;
+  writable?: boolean;
+};
+
 export type IChatProps = {
   accessToken: string;
   applicationName: 'CREW' | 'TAM';
   group?: IGroupItem;
-  groupId?: number;
   userProfile: IUserProfile;
   userList: IUserModel[];
   messages: IMessageModel[];
   writable: boolean;
   chatHookProvider?: IChatHookProvider;
+  keysPrefix?: string;
+  isThread?: boolean;
+  onNavigateToThread?: (params: INavigateToThreadParams) => void;
 };

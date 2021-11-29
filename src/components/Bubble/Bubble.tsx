@@ -28,6 +28,7 @@ import {Time} from '../Time';
 import {useUserHook} from '../../hooks/useUserHook';
 import {IGroupItem} from '../../model/Chat/Group';
 import {IMessage, IMessageModel} from '../../model/Chat/Message';
+import {INavigateToThreadParams} from '../../model/IChatProps';
 const {isSameUser, isSameDay} = utils;
 
 interface IBubbleProps extends React.Props<Bubble> {
@@ -307,26 +308,42 @@ const UserProvider: FC<any> = props => {
   );
 };
 
-const RenderReplyLength = memo((props: any) => {
-  // const route = useRoute();
-  // const {group, writable} = route?.params;
-  return (
-    <TouchableWithoutFeedback
-      onPress={() => {
-        // NavHandler.push({
-        //   name: ScreenNames.MessageThread,
-        //   params: {
-        //     message: props?.currentMessage,
-        //     group: group,
-        //     writable: writable,
-        //   },
-        // });
-      }}>
-      <Text style={styles.replyCountStyle}>
-        {props?.currentMessage?.replyCount || ''} replies
-      </Text>
-    </TouchableWithoutFeedback>
-  );
-});
+const RenderReplyLength = memo(
+  (props: {
+    currentMessage: IMessageModel;
+    group: IGroupItem;
+    writable: boolean;
+    onNavigateToThread: (params: INavigateToThreadParams) => void;
+  }) => {
+    const {currentMessage, group, writable, onNavigateToThread} = props ?? {};
+    // const route = useRoute();
+    // const {group, writable} = route?.params;
+    return (
+      <TouchableWithoutFeedback
+        onPress={() => {
+          onNavigateToThread({
+            message: currentMessage,
+            group: group,
+            writable: writable,
+          });
+        }}
+        // onPress={() => {
+        //   NavHandler.push({
+        //     name: ScreenNames.MessageThread,
+        //     params: {
+        //       message: props?.currentMessage,
+        //       group: group,
+        //       writable: writable,
+        //     },
+        //   });
+        // }}
+      >
+        <Text style={styles.replyCountStyle}>
+          {currentMessage?.replyCount || ''} replies
+        </Text>
+      </TouchableWithoutFeedback>
+    );
+  },
+);
 
 export default Bubble;

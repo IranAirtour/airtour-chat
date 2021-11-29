@@ -6,7 +6,7 @@ import {parsePatterns, RenderMessage} from '../renderMessage';
 import {ActivityIndicator} from 'react-native';
 import {RenderDay} from '../renderDay';
 // import {useChatHook} from '../../hooks/useChatHook';
-import {FileBottomSheet, useFileSheet} from 'airtour-components';
+import {FileBottomSheet, useFileSheet, ScreenUtils} from 'airtour-components';
 import {IMessageModel} from '../../model/Chat/Message';
 import {ScrollToBottom} from '../ScrollToBottom';
 import {useAppDispatch, useAppSelector} from '../../redux/store';
@@ -17,13 +17,17 @@ export const ChatComponent = (props: IChatProps) => {
   const {
     applicationName,
     accessToken,
-    groupId,
+    group,
     userList,
     userProfile,
     messages,
     writable,
     chatHookProvider,
+    keysPrefix,
+    isThread = false,
   } = props;
+
+  const groupId = Number(group?._id);
 
   const {
     chatInputText,
@@ -89,10 +93,16 @@ export const ChatComponent = (props: IChatProps) => {
     [entities, messages],
   );
 
+  const maintainVisibleContentPosition = {
+    autoscrollToTopThreshold: ScreenUtils.h(90),
+    minIndexForVisible: 1,
+  };
+
   return (
     <>
       <GiftedChat
         messages={messages}
+        keysPrefix={keysPrefix}
         onViewableItemsChanged={onViewableItemsChangedCallBack}
         inverted={true}
         user={userProfile}
@@ -104,6 +114,9 @@ export const ChatComponent = (props: IChatProps) => {
         renderAvatarOnTop
         renderUsernameOnMessage
         keyboardShouldPersistTaps="never"
+        maintainVisibleContentPosition={
+          isThread ? maintainVisibleContentPosition : null
+        }
         renderInputToolbar={(toolbarProps: any) => (
           <RenderInputToolbar
             scrollToBottom={toolbarProps?.scrollToBottom}
@@ -122,8 +135,7 @@ export const ChatComponent = (props: IChatProps) => {
         renderMessage={(messageProps: any) => (
           <RenderMessage
             {...messageProps}
-            group={groupId}
-            // group={group}
+            group={group}
             retrySendMessage={retrySendMessage}
           />
         )}
@@ -135,7 +147,7 @@ export const ChatComponent = (props: IChatProps) => {
         onStartReached={onStartReached}
         onEndReached={onEndReached}
         ScrollToBottom={ScrollToBottom}
-        lastSeenMessageId={lastSeenMessageId}
+        lastSeenMessageId={isThread ? null : lastSeenMessageId}
       />
       <FileBottomSheet
         ref={fileSheetRef}
