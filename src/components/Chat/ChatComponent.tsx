@@ -25,6 +25,7 @@ export const ChatComponent = (props: IChatProps) => {
     chatHookProvider,
     keysPrefix,
     isThread = false,
+    onNavigateToThread,
   } = props;
 
   const groupId = Number(group?._id);
@@ -136,6 +137,8 @@ export const ChatComponent = (props: IChatProps) => {
           <RenderMessage
             {...messageProps}
             group={group}
+            writable={writable}
+            onNavigateToThread={onNavigateToThread}
             retrySendMessage={retrySendMessage}
           />
         )}

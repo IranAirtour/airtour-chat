@@ -34,6 +34,7 @@ const {isSameUser, isSameDay} = utils;
 interface IBubbleProps extends React.Props<Bubble> {
   user?: User;
   group: Partial<IGroupItem>;
+  writable?: boolean;
   touchableProps: object;
   renderUsernameOnMessage: boolean;
   isCustomViewBottom: boolean;
@@ -53,6 +54,7 @@ interface IBubbleProps extends React.Props<Bubble> {
   containerToPreviousStyle: LeftRightStyle<ViewStyle>;
   usernameStyle: TextStyle;
   quickReplyStyle: StyleProp<ViewStyle>;
+  onNavigateToThread?: (params: INavigateToThreadParams) => void;
   onQuickReply(replies: Reply[]): void;
   renderMessageImage(props: RenderMessageImageProps<IMessage>): React.ReactNode;
   renderMessageVideo(props: RenderMessageVideoProps<IMessage>): React.ReactNode;
@@ -238,9 +240,16 @@ class Bubble extends React.PureComponent<IBubbleProps> {
   }
 
   renderRepliesLength() {
-    const {currentMessage} = this.props;
+    const {currentMessage, group, writable, onNavigateToThread} = this.props;
     if (currentMessage?.replyCount > 0) {
-      return <RenderReplyLength currentMessage={currentMessage} />;
+      return (
+        <RenderReplyLength
+          currentMessage={currentMessage}
+          group={group}
+          writable={writable}
+          onNavigateToThread={onNavigateToThread}
+        />
+      );
     }
     return null;
   }
