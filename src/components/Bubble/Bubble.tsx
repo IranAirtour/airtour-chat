@@ -6,7 +6,6 @@ import {
   TextStyle,
   TouchableWithoutFeedback,
 } from 'react-native';
-
 import {styles} from './styles';
 import {MessageText, utils, BubbleProps, User} from 'react-native-gifted-chat';
 import {LeftRightStyle, Reply} from 'react-native-gifted-chat/lib/Models';
@@ -18,9 +17,6 @@ import {
 } from 'react-native-gifted-chat/lib/Bubble';
 import MessageReplay from '../Replay/MessageReply';
 import {Text, RecorderPlayer} from 'airtour-components';
-// import {useRoute} from '@react-navigation/native';
-// import {NavHandler} from '../../../../navigation/navConfig';
-// import {ScreenNames} from '../../../../resources/strings';
 import {ExtendedMessageImage} from '../MessageImage/MessageImage';
 import {ExtendedMessageFile} from '../MessageFile/MessageFile';
 import MessageVideo from 'react-native-gifted-chat/lib/MessageVideo';
@@ -325,8 +321,6 @@ const RenderReplyLength = memo(
     onNavigateToThread: (params: INavigateToThreadParams) => void;
   }) => {
     const {currentMessage, group, writable, onNavigateToThread} = props ?? {};
-    // const route = useRoute();
-    // const {group, writable} = route?.params;
     return (
       <TouchableWithoutFeedback
         onPress={() => {
@@ -335,18 +329,7 @@ const RenderReplyLength = memo(
             group: group,
             writable: writable,
           });
-        }}
-        // onPress={() => {
-        //   NavHandler.push({
-        //     name: ScreenNames.MessageThread,
-        //     params: {
-        //       message: props?.currentMessage,
-        //       group: group,
-        //       writable: writable,
-        //     },
-        //   });
-        // }}
-      >
+        }}>
         <Text style={styles.replyCountStyle}>
           {currentMessage?.replyCount || ''} replies
         </Text>
