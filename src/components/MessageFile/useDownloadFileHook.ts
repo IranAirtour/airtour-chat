@@ -87,7 +87,7 @@ export const useDownloadFileHook = (props: any) => {
 
   const openFile = useCallback(
     fileToOpen => {
-      FileViewerClient.open(fileToOpen || pathToFile).catch(() => {
+      FileViewerClient.openFile(fileToOpen || pathToFile).catch(() => {
         ToastHandlerClient.show('format denied');
       });
     },
