@@ -10,6 +10,12 @@ import {FileViewerClient} from 'airtour-components/src/utils/FileViewer';
 type NullableString = string | null;
 type NullableNumber = number | null;
 
+interface IFileStatus {
+  color?: string;
+  icon?: string;
+  status?: number;
+}
+
 const IFileResource = {
   NOT_EXISTED: {icon: 'download-outline'},
   EXISTED: {icon: 'checkmark'},
@@ -23,7 +29,9 @@ export const useDownloadFileHook = (props: any) => {
   const [downloadProgress, setDownloadProgress] = useState<NullableNumber>(100);
   const {file} = props?.currentMessage ?? props ?? {};
   const {id: attachmentId, uri, name, type, mimeType} = file ?? {};
-  const [fileStatus, setFileStatus] = useState(IFileResource.NOT_EXISTED);
+  const [fileStatus, setFileStatus] = useState<IFileStatus>(
+    IFileResource.NOT_EXISTED,
+  );
   const fileUri = uri;
   const fullName = (name || '') + '.' + (type || mimeType || '');
   // const fullName = (name || '') + '.' + (type || mimeType || '');
