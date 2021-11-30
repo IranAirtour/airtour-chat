@@ -8,10 +8,9 @@ import {RenderDay} from '../renderDay';
 import {FileBottomSheet, useFileSheet, ScreenUtils} from 'airtour-components';
 import {IMessageModel} from '../../model/Chat/Message';
 import {ScrollToBottom} from '../ScrollToBottom';
-import {useAppDispatch, useAppSelector} from '../../redux/store';
+import {useAppSelector} from '../../redux/store';
 
 export const ChatComponent = (props: IChatProps) => {
-  const dispatch = useAppDispatch();
   const {
     applicationName,
     accessToken,
