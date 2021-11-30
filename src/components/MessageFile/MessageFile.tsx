@@ -120,7 +120,7 @@ const BaseMessageFile = memo((props: any) => {
             numberOfLines={1}
             style={StyleSheet.flatten([
               styles.fileNameText,
-              // { color: isLeftSide ? '#121212' : '#F5F5F5' },
+              {color: isLeftSide ? '#121212' : '#F5F5F5'},
               props?.fileNameStyle ?? {},
             ])}>
             {currentMessage?.file?.name || ''}
