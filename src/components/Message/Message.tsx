@@ -187,7 +187,8 @@ const MessageViewContainer: FC<any> = props => {
     renderTime,
   } = props;
   const {userId} = currentMessage;
-  const userMemo = useUserHook(null, userId);
+  const userMemo = useUserHook(currentMessage?.user, userId);
+  // const userMemo = useUserHook(null, userId);
   const userProfile: IUserProfile | null = useAppSelector(
     state => state.global.userProfile,
   );
@@ -208,8 +209,7 @@ const MessageViewContainer: FC<any> = props => {
       <View
         style={flatten([
           {
-            flexDirection: isMyUser ? 'row-reverse' : 'row',
-            // flexDirection: isLeftPosition ? 'row' : 'row-reverse',
+            flexDirection: isLeftPosition ? 'row' : 'row-reverse',
             marginHorizontal: 8,
           },
         ])}>

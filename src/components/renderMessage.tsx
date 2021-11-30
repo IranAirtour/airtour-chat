@@ -6,14 +6,14 @@ import {IMessageModel} from '../model/Chat/Message';
 import {IUserProfile} from '../model/User/IUserProfile';
 
 export type IRenderMessageType = {
-  userProfile: IUserProfile;
+  user: IUserProfile;
   currentMessage: IMessageModel;
   retrySendMessage: any;
 };
 export const RenderMessage = (props: IRenderMessageType) => {
   const {
     currentMessage: {text: currText, userId: userId},
-    userProfile,
+    user: userProfile,
     retrySendMessage,
   } = props;
 

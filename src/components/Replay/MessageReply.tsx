@@ -10,7 +10,6 @@ import {styles} from './styles';
 import {Text, flatten} from 'airtour-components';
 import {IUserProfile} from '../../model/User/IUserProfile';
 import {IMessageModel} from '../../model/Chat/Message';
-import {useUserHook} from '../../hooks/useUserHook';
 
 export type IMessageReplyProps = {
   currentMessage: IMessageModel;
@@ -30,11 +29,6 @@ const MessageReplay = memo((props: IMessageReplyProps) => {
   } = props;
   const {replyTo} = currentMessage ?? {};
   const {user: replyToUser, userId, message} = replyTo ?? {};
-  const userMemo = useUserHook(null, userId);
-  // const userProfile: IUserProfile | null = useAppSelector(
-  //   state => state.global.userProfile,
-  // );
-  const isMyUser = userMemo?._id === userProfile?._id;
   const isLeftSide = position === 'left';
   return (
     <TouchableWithoutFeedback
@@ -54,7 +48,7 @@ const MessageReplay = memo((props: IMessageReplyProps) => {
               marginTop: 4,
             }}>
             <View style={{flexDirection: 'row'}}>
-              <Indicator color={isMyUser ? '#e9e9e9' : '#6FA7DA'} />
+              <Indicator color={'#e9e9e9'} />
               <View style={{flex: 1, paddingVertical: 3}}>
                 <Text
                   style={StyleSheet.flatten([
