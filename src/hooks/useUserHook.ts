@@ -10,13 +10,13 @@ export const useUserHook = (
   userId: number,
 ): IUserModel | null => {
   // const userList = useAppSelector(userSelectors.selectAll);
-  // const user: IUserModel | undefined = useAppSelector(
-  //   state => state.user.entities[String(userId)],
-  // );
-  const user: IUserModel | undefined = userSelectors.selectById(
-    store.getState(),
-    userId,
+  const user: IUserModel | undefined = useAppSelector(
+    state => state.user.entities[String(userId)],
   );
+  // const user: IUserModel | undefined = userSelectors.selectById(
+  //   store.getState(),
+  //   userId,
+  // );
   const userProfile: IUserProfile | null = useAppSelector(
     state => state.global.userProfile,
   );

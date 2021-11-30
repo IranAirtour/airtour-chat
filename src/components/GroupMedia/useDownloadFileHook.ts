@@ -1,44 +1,48 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {PermissionHandlerClient} from 'airtour-components/src/utils/PermissionHandler';
-import {useAppDispatch, useAppSelector} from '../../redux/store';
+import FileViewer from 'react-native-file-viewer';
+import {MessageFactory} from '../../Factory/Message';
+import {useAppDispatch} from '../../redux/store';
 import {addDownloadedAttachment} from '../../redux/slices/groupSlice';
-import {logWarn} from 'airtour-components/src/utils/Logger';
 import {FetchBlobClient} from 'airtour-components/src/utils/FetchBlob';
 import {ToastHandlerClient} from 'airtour-components/src/utils/Toast';
-import {FileViewerClient} from 'airtour-components/src/utils/FileViewer';
+import {PermissionHandlerClient} from 'airtour-components/src/utils/PermissionHandler';
+import {IServerAttachment} from '../../model/ApiModels/Message';
 
 type NullableString = string | null;
 type NullableNumber = number | null;
 
+interface IFileStatus {
+  color?: string;
+  icon?: string;
+  status?: number;
+}
+
 const IFileResource = {
-  NOT_EXISTED: {icon: 'download-outline'},
-  EXISTED: {icon: 'checkmark'},
-  DOWNLOADING: {icon: ''},
-  DOWNLOAD_FAILED: {icon: 'reload'},
+  NOT_EXISTED: {color: '#1CA35A', icon: 'download-outline'},
+  EXISTED: {color: '#7879F1', icon: 'checkmark'},
+  DOWNLOADING: {color: '#F178B6', icon: ''},
 };
 
 export const useDownloadFileHook = (props: any) => {
   const dispatch = useAppDispatch();
   const [taskId, setTaskId] = React.useState<NullableString>(null);
   const [downloadProgress, setDownloadProgress] = useState<NullableNumber>(100);
-  const {file} = props?.currentMessage ?? props ?? {};
-  const {id: attachmentId, uri, name, type, mimeType} = file ?? {};
-  const [fileStatus, setFileStatus] = useState(IFileResource.NOT_EXISTED);
-  const fileUri = uri;
+  const {file} = props ?? {};
+  const fileUri = MessageFactory.generateAttachmentUrl(
+    file as IServerAttachment,
+  );
+  const [fileStatus, setFileStatus] = useState<IFileStatus>(
+    IFileResource.NOT_EXISTED,
+  );
+  const {id: attachmentId, name, type, mimeType} = file ?? {};
+
   const fullName = (name || '') + '.' + (type || mimeType || '');
-  // const fullName = (name || '') + '.' + (type || mimeType || '');
+
   const pathToFile: string = useMemo(
     () =>
       FetchBlobClient.ChatPath + attachmentId + '.' + (type || mimeType || ''),
     [attachmentId],
   );
-  const downloadedFileIds = useAppSelector(
-    state => state.group.downloadedFileIds,
-  );
-
-  const isFileDownloaded = useMemo(() => {
-    return downloadedFileIds.hasOwnProperty(attachmentId);
-  }, [attachmentId, downloadedFileIds]);
 
   useEffect(() => {
     FetchBlobClient.isFileExists(pathToFile).then(isExists => {
@@ -46,10 +50,9 @@ export const useDownloadFileHook = (props: any) => {
         isExists ? IFileResource.EXISTED : IFileResource.NOT_EXISTED,
       );
     });
-  }, [pathToFile, isFileDownloaded, attachmentId]);
+  }, [pathToFile]);
 
   const onFilePress = useCallback(() => {
-    logWarn(pathToFile, 'AttachmentId');
     requestStoragePermissions();
     isFileExists(pathToFile).then(isExist => {
       // logWarn(fullName,pathToFile,fullName)
@@ -79,15 +82,15 @@ export const useDownloadFileHook = (props: any) => {
   }, []);
 
   const isFileExists = useCallback(
-    (pathToFile): Promise<boolean> => {
-      return FetchBlobClient.isFileExists(pathToFile);
+    (path: string = pathToFile): Promise<boolean> => {
+      return FetchBlobClient.isFileExists(path);
     },
     [pathToFile],
   );
 
   const openFile = useCallback(
     fileToOpen => {
-      FileViewerClient.openFile(fileToOpen || pathToFile).catch(() => {
+      FileViewer.open(fileToOpen || pathToFile).catch(() => {
         ToastHandlerClient.show('format denied');
       });
     },
@@ -106,8 +109,8 @@ export const useDownloadFileHook = (props: any) => {
           url: fileUri,
         },
         {
-          // fileName: attachmentId,
           fileName: attachmentId,
+          // fileName: name,
           mimeType: (mimeType || type || 'txt') as string,
         },
         (percent: number) => {
@@ -125,7 +128,7 @@ export const useDownloadFileHook = (props: any) => {
           openFile(file?.path() || file?.data);
         })
         .catch(e => {
-          setFileStatus(IFileResource.DOWNLOAD_FAILED);
+          setFileStatus(IFileResource.NOT_EXISTED);
         })
         .finally(() => {
           setTaskId(null);
@@ -140,6 +143,7 @@ export const useDownloadFileHook = (props: any) => {
       downloadProgress,
       downloadTaskId: taskId,
       fileStatus,
+      isFileExists,
     };
   };
   return useDownloadFileProvider();

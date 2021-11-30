@@ -11,7 +11,7 @@ import LottieView from 'lottie-react-native';
 import {formatBytes} from 'airtour-components/src/utils/Other';
 import DateTimeFormatter from 'airtour-components/src/utils/DateTimeUtils';
 import {animations} from '../../assets';
-import {useDownloadFileHook} from '../MessageFile/useDownloadFileHook';
+import {useDownloadFileHook} from './useDownloadFileHook';
 import {useUserHook} from '../../hooks/useUserHook';
 
 export const MediaListItem = (props: any) => {
