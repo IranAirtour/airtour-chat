@@ -15,7 +15,7 @@ import {useDownloadFileHook} from './useDownloadFileHook';
 import {useUserHook} from '../../hooks/useUserHook';
 
 export const MediaListItem = (props: any) => {
-  const {groupId, file} = props;
+  const {groupId, file, baseUrl} = props;
   const {
     id,
     thumbnailUrl = '',

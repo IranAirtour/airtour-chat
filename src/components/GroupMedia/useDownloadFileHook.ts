@@ -27,9 +27,10 @@ export const useDownloadFileHook = (props: any) => {
   const dispatch = useAppDispatch();
   const [taskId, setTaskId] = React.useState<NullableString>(null);
   const [downloadProgress, setDownloadProgress] = useState<NullableNumber>(100);
-  const {file} = props ?? {};
+  const {file, baseUrl} = props ?? {};
   const fileUri = MessageFactory.generateAttachmentUrl(
     file as IServerAttachment,
+    baseUrl,
   );
   const [fileStatus, setFileStatus] = useState<IFileStatus>(
     IFileResource.NOT_EXISTED,

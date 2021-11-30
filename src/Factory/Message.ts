@@ -19,11 +19,11 @@ export class MessageFactory {
   static generateAttachmentFullName(attachment: IServerAttachment): string {
     return `${attachment?.name ?? ''}.${attachment?.mimeType ?? ''}`;
   }
-  static generateAttachmentUrl(attachment: IServerAttachment): string {
-    return (
-      store.getState().global.mediaUrl +
-      `${attachment?.id}?hash=${attachment?.hash}`
-    );
+  static generateAttachmentUrl(
+    attachment: IServerAttachment,
+    mediaBaseUrl: string = store.getState().global.mediaUrl,
+  ): string {
+    return mediaBaseUrl + `${attachment?.id}?hash=${attachment?.hash}`;
   }
   static prepareBaseIMessage(message: IServerMessageModel): IMessageModel {
     const user: IUserModel | null = UserFactory.prepareBaseIUserById(
