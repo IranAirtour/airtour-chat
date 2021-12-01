@@ -1,8 +1,7 @@
 import {useMemo} from 'react';
-import store, {useAppSelector} from '../redux/store';
+import {useAppSelector} from '../redux/store';
 import {IUserProfile} from '../model/User/IUserProfile';
 import {IUserModel} from '../model/User';
-import {userSelectors} from '../redux/slices/userSlice';
 import {generateMediaUrl} from '../utils/Other';
 
 export const useUserHook = (
