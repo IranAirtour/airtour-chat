@@ -13,9 +13,7 @@ import {useAppSelector} from '../../redux/store';
 export const ChatComponent = (props: IChatProps) => {
   const {
     applicationName,
-    accessToken,
     group,
-    userList,
     userProfile,
     messages,
     writable,
