@@ -81,25 +81,7 @@ export const GroupListItem = (
   const time = useMemo(() => {
     return DateTimeFormatter.formatTime(utcTimestamp, false);
   }, [utcTimestamp]);
-  // const onPressCallBack = useCallback(() => {
-  //   if (!hasActionPermission(ActionList['CREW:GROUP_READ_CHAT_MESSAGE'])) {
-  //     return;
-  //   }
-  //   NavHandler.push({
-  //     name: ScreenNames.Chat,
-  //     params: {
-  //       group: {
-  //         _id,
-  //         title,
-  //         icon,
-  //         lastSeenMessageId,
-  //       },
-  //       writable: hasActionPermission(
-  //         ActionList['CREW:GROUP_WRITE_CHAT_MESSAGE'],
-  //       ),
-  //     },
-  //   });
-  // }, [_id, title, icon, lastSeenMessageId]);
+
   const avatarTitle = useMemo(() => {
     const titleArray = title?.split(' ');
     return (
