@@ -109,6 +109,7 @@ export const useDownloadFileHook = (props: any) => {
           // fileName: attachmentId,
           fileName: attachmentId,
           mimeType: (mimeType || type || 'txt') as string,
+          pathToDownload: pathToFile,
         },
         (percent: number) => {
           setDownloadProgress(percent);
