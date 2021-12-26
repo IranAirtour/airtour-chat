@@ -40,4 +40,5 @@ export type IChatProps = {
   chatReplyAttachment?: IFileModel;
   lastSeenMessageId?: number;
   chatEntities?: Dictionary<IMessageModel>;
+  downloadedFileIds: Record<string, boolean>;
 };

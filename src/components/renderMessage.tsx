@@ -9,12 +9,14 @@ export type IRenderMessageType = {
   user: IUserProfile;
   currentMessage: IMessageModel;
   retrySendMessage: any;
+  downloadedFileIds: Record<string, boolean>;
 };
 export const RenderMessage = (props: IRenderMessageType) => {
   const {
     currentMessage: {text: currText, userId: userId},
     user: userProfile,
     retrySendMessage,
+    downloadedFileIds,
   } = props;
 
   const isMyUser = userId === userProfile?._id;
@@ -31,6 +33,7 @@ export const RenderMessage = (props: IRenderMessageType) => {
       messageTextStyle={messageTextStyle}
       position={isMyUser ? 'right' : 'left'}
       retrySendMessage={retrySendMessage}
+      downloadedFileIds={downloadedFileIds}
     />
   );
 };

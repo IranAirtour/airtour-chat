@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {PermissionHandlerClient} from 'airtour-components/src/utils/PermissionHandler';
-import {useAppDispatch, useAppSelector} from '../../redux/store';
+import {useAppDispatch} from '../../redux/store';
 import {addDownloadedAttachment} from '../../redux/slices/groupSlice';
 import {logWarn} from 'airtour-components/src/utils/Logger';
 import {FetchBlobClient} from 'airtour-components/src/utils/FetchBlob';
@@ -22,6 +22,7 @@ export const useDownloadFileHook = (props: any) => {
   const [taskId, setTaskId] = React.useState<NullableString>(null);
   const [downloadProgress, setDownloadProgress] = useState<NullableNumber>(100);
   const {file} = props?.currentMessage ?? props ?? {};
+  const {downloadedFileIds} = props;
   const {id: attachmentId, uri, name, type, mimeType} = file ?? {};
   const [fileStatus, setFileStatus] = useState(IFileResource.NOT_EXISTED);
   const fileUri = uri;
@@ -32,9 +33,9 @@ export const useDownloadFileHook = (props: any) => {
       FetchBlobClient.ChatPath + attachmentId + '.' + (type || mimeType || ''),
     [attachmentId],
   );
-  const downloadedFileIds = useAppSelector(
-    state => state.group.downloadedFileIds,
-  );
+  // const downloadedFileIds = useAppSelector(
+  //   state => state.group.downloadedFileIds,
+  // );
 
   const isFileDownloaded = useMemo(() => {
     return downloadedFileIds.hasOwnProperty(attachmentId);

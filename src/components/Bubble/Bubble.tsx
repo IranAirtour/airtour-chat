@@ -25,8 +25,6 @@ import {useUserHook} from '../../hooks/useUserHook';
 import {IGroupItem} from '../../model/Chat/Group';
 import {IMessage, IMessageModel} from '../../model/Chat/Message';
 import {INavigateToThreadParams} from '../../model/IChatProps';
-import {useAppSelector} from '../../redux/store';
-import {IUserProfile} from '../../model/User/IUserProfile';
 const {isSameUser, isSameDay} = utils;
 
 interface IBubbleProps extends React.Props<Bubble> {

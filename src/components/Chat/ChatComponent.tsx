@@ -26,6 +26,7 @@ export const ChatComponent = (props: IChatProps) => {
     chatReplyAttachment,
     lastSeenMessageId,
     chatEntities,
+    downloadedFileIds,
   } = props;
 
   const groupId = Number(group?._id);
@@ -147,6 +148,7 @@ export const ChatComponent = (props: IChatProps) => {
             writable={writable}
             onNavigateToThread={onNavigateToThread}
             retrySendMessage={retrySendMessage}
+            downloadedFileIds={downloadedFileIds}
           />
         )}
         renderDay={(dayProps: any) => <RenderDay {...dayProps} />}

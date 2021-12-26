@@ -8,51 +8,63 @@ import {
 import React, {memo, useEffect, useMemo} from 'react';
 import {Icon} from 'airtour-components';
 import {renderBubble} from '../renderBubble';
-import {clearReplyAttachment} from '../../redux/slices/chatSlice';
 import {styles} from './styles';
 import {IUserModel} from '../../model/User';
 import {IMessageModel} from '../../model/Chat/Message';
 import {IFileModel, IImageAssetModel} from '../../model/Chat/File';
-import {useAppSelector, useAppDispatch} from '../../redux/store';
 import {IUserProfile} from '../../model/User/IUserProfile';
 import {IGroupItem} from '../../model/Chat/Group';
 
 interface IReplyContentMessage {
   currentMessage: Partial<IMessageModel>;
-  user: IUserModel | null;
+  user?: IUserProfile;
   [key: string]: any;
 }
 interface IProps extends Partial<IMessageModel> {
   containerStyle?: StyleProp<any>;
+  group?: IGroupItem;
+  replyAttachmentFile?: IFileModel;
+  replyAttachmentImage?: IImageAssetModel;
+  replyMessage?: IMessageModel;
 }
 const ReplyFooter = memo((props: IProps) => {
+  const {
+    _id,
+    user,
+    text,
+    containerStyle,
+    group,
+    replyAttachmentFile,
+    replyAttachmentImage,
+    replyMessage,
+  } = props;
   const [isShowing, setShowing] = React.useState(true);
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
   // const route = useRoute();
   // const {group} = route?.params;
   // const groupId = Number(group?._id);
-  const userProfile: IUserProfile | null = useAppSelector(
-    state => state.global.userProfile,
-  );
-  const group: IGroupItem | null = useAppSelector(state => state.global.group);
-  const replyAttachmentFile: IFileModel | null = useAppSelector(
-    state => state.chat.replyFile,
-  );
-  const replyAttachmentImage: IImageAssetModel | null = useAppSelector(
-    state => state.chat.replyImage,
-  );
-  const replyMessage: IMessageModel | null = useAppSelector(
-    state => state.chat.reply,
-  );
+  // const userProfile: IUserProfile | null = useAppSelector(
+  //   state => state.global.userProfile,
+  // );
+  // const group: IGroupItem | null = useAppSelector(state => state.global.group);
+  // const replyAttachmentFile: IFileModel | null = useAppSelector(
+  //   state => state.chat.replyFile,
+  // );
+  // const replyAttachmentImage: IImageAssetModel | null = useAppSelector(
+  //   state => state.chat.replyImage,
+  // );
+  // const replyMessage: IMessageModel | null = useAppSelector(
+  //   state => state.chat.reply,
+  // );
   const useReplyAttachmentPayload = useMemo(() => {
     const payload: IReplyContentMessage = {
       currentMessage: {
         _id: 909999999,
         taskId: null,
-        user: userProfile as IUserModel,
+        user: user as IUserModel,
         // text: chatInputMessage,
       },
-      user: userProfile as IUserModel,
+      user: user,
       group: group,
       dispatch: null,
       messages: [],
@@ -71,8 +83,8 @@ const ReplyFooter = memo((props: IProps) => {
       payload.currentMessage.image = replyAttachmentImage?.path;
     }
     return payload;
-  }, [replyAttachmentFile, replyAttachmentImage, group, userProfile]);
-  const {_id, user, text, containerStyle} = props;
+  }, [replyAttachmentFile, replyAttachmentImage, group, user]);
+
   useEffect(() => {
     if (typeof _id === undefined) {
       setShowing(false);
@@ -88,7 +100,8 @@ const ReplyFooter = memo((props: IProps) => {
   }, [replyAttachmentImage]);
   const dismiss = () => {
     setShowing(false);
-    dispatch(clearReplyAttachment());
+    // dispatch action CLEAR_REPLY_ATTACHMENT
+    // dispatch(clearReplyAttachment());
   };
   const hasAttachment =
     !!useReplyAttachmentPayload?.currentMessage?.file?.path ||
@@ -131,7 +144,8 @@ const ReplyFooter = memo((props: IProps) => {
             <View style={styles.attachmentStyle}>
               <TouchableOpacity
                 onPress={() => {
-                  dispatch(clearReplyAttachment());
+                  // dispatch action CLEAR_REPLY_ATTACHMENT
+                  // dispatch(clearReplyAttachment());
                 }}>
                 <Icon name="x" type="feather" color="#0084ff" />
               </TouchableOpacity>

@@ -10,10 +10,6 @@ import {
 } from 'airtour-components';
 import React, {useMemo} from 'react';
 import {styles} from './styles';
-// import {NavHandler} from '../../../navigation/navConfig';
-// import {ScreenNames} from '../../../resources/strings';
-// import {hasActionPermission} from '../../../permissions/actionHandler';
-// import {ActionList} from '../../../permissions/actionList';
 import {useUserHook} from '../../hooks/useUserHook';
 import DateTimeFormatter from 'airtour-components/src/utils/DateTimeUtils';
 import {IGroupItem, ILastMessage} from '../../model/Chat/Group';

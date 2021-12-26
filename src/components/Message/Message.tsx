@@ -27,8 +27,8 @@ import {Time} from '../Time';
 import {Day} from '../Day';
 import DateTimeFormatter from 'airtour-components/src/utils/DateTimeUtils';
 import {IMessageModel} from '../../model/Chat/Message';
-import {IUserProfile} from '../../model/User/IUserProfile';
-import {useAppSelector} from '../../redux/store';
+// import {IUserProfile} from '../../model/User/IUserProfile';
+// import {useAppSelector} from '../../redux/store';
 import {useUserHook} from '../../hooks/useUserHook';
 const {isSameUser, isSameDay} = utils;
 
@@ -177,6 +177,7 @@ const MessageViewContainer: FC<any> = props => {
   const {position = 'left'} = props;
   const isLeftPosition = position === 'left';
   const {
+    user,
     currentMessage,
     nextMessage,
     previousMessage,
@@ -189,10 +190,10 @@ const MessageViewContainer: FC<any> = props => {
   const {userId} = currentMessage;
   const userMemo = useUserHook(currentMessage?.user, userId);
   // const userMemo = useUserHook(null, userId);
-  const userProfile: IUserProfile | null = useAppSelector(
-    state => state.global.userProfile,
-  );
-  const isMyUser = userMemo?._id === userProfile?._id || !isLeftPosition;
+  // const userProfile: IUserProfile | null = useAppSelector(
+  //   state => state.global.userProfile,
+  // );
+  const isMyUser = userMemo?._id === user?._id || !isLeftPosition;
   const sameUser = isSameUser(currentMessage, nextMessage);
   const shouldHaveTopBorderRadius = isSameUser(currentMessage, previousMessage);
   const marginBottom = sameUser ? 2 : 10;
