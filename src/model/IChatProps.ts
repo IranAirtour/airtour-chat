@@ -1,6 +1,8 @@
 import {IUserProfile} from './User/IUserProfile';
 import {IMessageModel} from './Chat/Message';
 import {IGroupItem} from './Chat/Group';
+import {IFileModel} from './Chat/File';
+import {Dictionary} from '@reduxjs/toolkit';
 
 export type IChatHookProvider = {
   chatInputText?: string;
@@ -32,4 +34,10 @@ export type IChatProps = {
   keysPrefix?: string;
   isThread?: boolean;
   onNavigateToThread?: (params: INavigateToThreadParams) => void;
+
+  // Redux dependencies
+  chatReplyMessage?: IMessageModel;
+  chatReplyAttachment?: IFileModel;
+  lastSeenMessageId?: number;
+  chatEntities?: Dictionary<IMessageModel>;
 };

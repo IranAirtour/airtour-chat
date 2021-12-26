@@ -8,7 +8,6 @@ import {RenderDay} from '../renderDay';
 import {FileBottomSheet, useFileSheet, ScreenUtils} from 'airtour-components';
 import {IMessageModel} from '../../model/Chat/Message';
 import {ScrollToBottom} from '../ScrollToBottom';
-import {useAppSelector} from '../../redux/store';
 
 export const ChatComponent = (props: IChatProps) => {
   const {
@@ -21,6 +20,12 @@ export const ChatComponent = (props: IChatProps) => {
     keysPrefix,
     isThread = false,
     onNavigateToThread,
+
+    // Redux dependencies
+    chatReplyMessage,
+    chatReplyAttachment,
+    lastSeenMessageId,
+    chatEntities,
   } = props;
 
   const groupId = Number(group?._id);
@@ -60,8 +65,8 @@ export const ChatComponent = (props: IChatProps) => {
   //   }, 1000);
   // }, [userList]);
 
-  const chatReplyMessage = useAppSelector(state => state.chat.reply);
-  const chatReplyAttachment = useAppSelector(state => state.chat.replyFile);
+  // const chatReplyMessage = useAppSelector(state => state.chat.reply);
+  // const chatReplyAttachment = useAppSelector(state => state.chat.replyFile);
   const onStartReached = useCallback(() => {
     return new Promise(resolve => {
       onRefreshCallback(messages as IMessageModel[]).finally(() =>
@@ -75,25 +80,25 @@ export const ChatComponent = (props: IChatProps) => {
     });
   }, [messages]);
 
-  const lastSeenMessageId =
-    useAppSelector(
-      state => state.group.entities[String(groupId)]?.lastSeenMessageId,
-    ) ?? null;
-  const entities = useAppSelector(state => state.chat.entities);
+  // const lastSeenMessageId =
+  //   useAppSelector(
+  //     state => state.group.entities[String(groupId)]?.lastSeenMessageId,
+  //   ) ?? null;
+  // const entities = useAppSelector(state => state.chat.entities);
 
   const onViewableItemsChangedCallBack = useCallback(
     (messageIdToSetSeen: number) => {
-      if (entities[String(messageIdToSetSeen)]) {
+      if (chatEntities[String(messageIdToSetSeen)]) {
         if (
-          Number(entities[String(messageIdToSetSeen)]?._id) ===
-          Number(entities[String(messageIdToSetSeen)]?.tempId)
+          Number(chatEntities[String(messageIdToSetSeen)]?._id) ===
+          Number(chatEntities[String(messageIdToSetSeen)]?.tempId)
         ) {
           return;
         }
       }
       onViewableItemsChanged(messageIdToSetSeen, messages);
     },
-    [entities, messages],
+    [chatEntities, messages],
   );
 
   const maintainVisibleContentPosition = {
