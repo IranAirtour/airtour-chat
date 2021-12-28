@@ -113,12 +113,15 @@ export const GroupListItem = (
             styles.rightSide,
           ])}>
           <View
-            style={StyleSheet.flatten([{height: '40%'}, GlobalStyles.flexRow])}>
+            style={StyleSheet.flatten([
+              // {height: '40%'},
+              GlobalStyles.flexRow,
+            ])}>
             <View
               style={flatten([
-                GlobalStyles.height100,
+                // GlobalStyles.height100,
                 GlobalStyles.fullCenter,
-                {flex: 9},
+                {flex: 9, paddingVertical: 10},
               ])}>
               <Text
                 h7
