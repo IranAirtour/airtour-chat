@@ -13,10 +13,16 @@ import {styles} from './styles';
 import {useUserHook} from '../../hooks/useUserHook';
 import DateTimeFormatter from 'airtour-components/src/utils/DateTimeUtils';
 import {IGroupItem, ILastMessage} from '../../model/Chat/Group';
+import {IUserModel} from '../../../../../app/models/User';
 
-const LastMessage = (props: any) => {
-  const {type = 1, text = '', userId, time, attachment} = props;
-  const userMemo = useUserHook(null, userId);
+const LastMessage = (props: {
+  user: IUserModel;
+  type: number;
+  text: string;
+  time: string;
+  attachment: any;
+}) => {
+  const {type = 1, text = '', user, time, attachment} = props;
   const typeIsText = Number(type) === 1;
   const typeIsFile = !!attachment && text.length === 0;
   const themeColors = useThemeColors();
@@ -36,14 +42,14 @@ const LastMessage = (props: any) => {
             overflow: 'hidden',
           },
         ])}>
-        {userMemo?._id ? (
+        {user?._id ? (
           <Text
             h8
             style={flatten([
               styles.username,
               {color: themeColors.primaryGray},
             ])}>
-            {`${userMemo?.name || ''}: `}{' '}
+            {`${user?.name || ''}: `}{' '}
           </Text>
         ) : null}
         {typeIsText ? text : ''}
@@ -71,7 +77,7 @@ export const GroupListItem = (
     type = 1,
     text = '',
     utcTimestamp,
-    senderUserId,
+    senderUser,
     attachment,
   } = (lastMessage as ILastMessage) ?? {};
   const time = useMemo(() => {
@@ -147,8 +153,7 @@ export const GroupListItem = (
             </View>
           </View>
           <LastMessage
-            user={null}
-            userId={senderUserId}
+            user={senderUser}
             type={type}
             text={text}
             time={time}
