@@ -10,10 +10,9 @@ import {
 } from 'airtour-components';
 import React, {useMemo} from 'react';
 import {styles} from './styles';
-import {useUserHook} from '../../hooks/useUserHook';
 import DateTimeFormatter from 'airtour-components/src/utils/DateTimeUtils';
 import {IGroupItem, ILastMessage} from '../../model/Chat/Group';
-import {IUserModel} from '../../../../../app/models/User';
+import {IUserModel} from '../../model/User';
 
 const LastMessage = (props: {
   user: IUserModel;

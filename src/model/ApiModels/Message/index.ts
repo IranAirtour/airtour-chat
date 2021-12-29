@@ -5,6 +5,7 @@ import {
   INullableString,
 } from '../../IBase';
 import {IUserModel} from '../../User';
+import {IServerUserModel} from '../User';
 
 export interface IServerRepliedToMessage {
   senderUserId: number;
@@ -51,7 +52,7 @@ export interface IServerGroupLastMessageModel {
   repliedToMessageId: null;
   replyCount: INullableNumber;
   senderUserId: number;
-  senderUser: IUserModel;
+  senderUser: IServerUserModel;
   sequentialId: INullableNumber;
   text: INullableString;
   type: INullableNumber;

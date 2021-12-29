@@ -2,6 +2,7 @@ import {IGroupItem, ILastMessage} from '../model/Chat/Group';
 import {IServerGroupLastMessageModel} from '../model/ApiModels/Message';
 import {IServerGroup} from '../model/ApiModels/Group';
 import {generateMediaUrl} from '../utils/Other';
+import {UserFactory} from './User';
 export class GroupFactory {
   static prepareBaseIServerGroupModel(group: IGroupItem): IServerGroup {
     const data: IServerGroup = {
@@ -43,7 +44,7 @@ export class GroupFactory {
       type: lastMessage?.type || 1,
       text: lastMessage?.text || '',
       senderUserId: lastMessage?.senderUserId,
-      senderUser: lastMessage?.senderUser,
+      senderUser: UserFactory.prepareBaseIUser(lastMessage?.senderUser),
       attachment: lastMessage?.attachment,
       utcTimestamp: lastMessage?.utcTimestamp,
       sent: true,
