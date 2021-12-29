@@ -43,6 +43,7 @@ export class GroupFactory {
       type: lastMessage?.type || 1,
       text: lastMessage?.text || '',
       senderUserId: lastMessage?.senderUserId,
+      senderUser: lastMessage?.senderUser,
       attachment: lastMessage?.attachment,
       utcTimestamp: lastMessage?.utcTimestamp,
       sent: true,

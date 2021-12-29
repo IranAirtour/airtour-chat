@@ -1,4 +1,5 @@
-import {INullableId, INullableNumber, INullableString} from "../IBase";
+import {INullableId, INullableNumber, INullableString} from '../IBase';
+import {IUserModel} from '../User';
 
 export interface ILastMessage {
   attachment: null;
@@ -7,6 +8,7 @@ export interface ILastMessage {
   repliedToMessageId: null;
   replyCount: INullableNumber;
   senderUserId: number;
+  senderUser: IUserModel;
   sequentialId: INullableNumber;
   text: INullableString;
   type: INullableNumber;

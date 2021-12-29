@@ -1,4 +1,10 @@
-import {INullableDate, INullableId, INullableNumber, INullableString} from "../../IBase";
+import {
+  INullableDate,
+  INullableId,
+  INullableNumber,
+  INullableString,
+} from '../../IBase';
+import {IUserModel} from '../../User';
 
 export interface IServerRepliedToMessage {
   senderUserId: number;
@@ -23,10 +29,10 @@ export interface IServerAttachment {
   senderUserId: INullableId;
   sentDate: INullableDate;
   extension?: string;
-
 }
 export interface IServerMessageModel {
   senderUserId: number;
+  senderUser: IUserModel;
   replyCount: number;
   groupSequentialId: number;
   utcTimestamp: number;
@@ -45,6 +51,7 @@ export interface IServerGroupLastMessageModel {
   repliedToMessageId: null;
   replyCount: INullableNumber;
   senderUserId: number;
+  senderUser: IUserModel;
   sequentialId: INullableNumber;
   text: INullableString;
   type: INullableNumber;

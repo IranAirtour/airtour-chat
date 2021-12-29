@@ -26,9 +26,9 @@ export class MessageFactory {
     return mediaBaseUrl + `${attachment?.id}?hash=${attachment?.hash}`;
   }
   static prepareBaseIMessage(message: IServerMessageModel): IMessageModel {
-    const user: IUserModel | null = UserFactory.prepareBaseIUserById(
-      message?.senderUserId,
-    );
+    // const user: IUserModel | null = UserFactory.prepareBaseIUserById(
+    //   message?.senderUserId,
+    // );
     // const messageDate = new Date(0); // The 0 there is the key, which sets the date to the epoch
     // if (message?.utcTimestamp) {
     //   messageDate.setUTCSeconds(message?.utcTimestamp);
@@ -40,7 +40,7 @@ export class MessageFactory {
       // createdAt: messageDate,
       createdAt: message?.utcTimestamp,
       groupId: message?.groupSequentialId || 0,
-      user: null,
+      user: message?.senderUser,
       userId: message?.senderUserId,
       replyCount: message?.replyCount || 0,
       taskId: null,
@@ -48,9 +48,9 @@ export class MessageFactory {
       received: true,
       index: null,
     };
-    if (user?._id) {
-      data.user = user;
-    }
+    // if (user?._id) {
+    //   data.user = user;
+    // }
     //file and asset
     if (message?.attachment) {
       const {attachment} = message ?? {};
