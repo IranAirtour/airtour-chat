@@ -14,7 +14,6 @@ export type IChatContextState = {
   onReplyMessageCallback: Function;
   onRefreshCallback: Function;
   onViewableItemsChanged: Function;
-  deleteMessageCallback: Function;
   setReply: Function;
   setFile: Function;
   retrySendMessage: Function;

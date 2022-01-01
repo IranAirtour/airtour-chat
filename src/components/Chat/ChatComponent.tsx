@@ -39,7 +39,6 @@ export const ChatComponent = (props: IChatProps) => {
     onReplyMessageCallback,
     onRefreshCallback,
     onViewableItemsChanged,
-    deleteMessageCallback,
     setReply,
     setFile,
     retrySendMessage,
@@ -155,7 +154,6 @@ export const ChatComponent = (props: IChatProps) => {
         renderLoading={() => <ActivityIndicator />}
         parsePatterns={parsePatterns}
         setReplyMessage={onReplyMessageCallback}
-        deleteMessage={deleteMessageCallback}
         onStartReached={onStartReached}
         onEndReached={onEndReached}
         ScrollToBottom={ScrollToBottom}
