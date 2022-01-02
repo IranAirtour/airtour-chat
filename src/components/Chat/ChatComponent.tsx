@@ -96,9 +96,9 @@ export const ChatComponent = (props: IChatProps) => {
           return;
         }
       }
-      onViewableItemsChanged(messageIdToSetSeen, messages);
+      onViewableItemsChanged(messageIdToSetSeen);
     },
-    [chatEntities, messages],
+    [chatEntities],
   );
 
   const maintainVisibleContentPosition = {

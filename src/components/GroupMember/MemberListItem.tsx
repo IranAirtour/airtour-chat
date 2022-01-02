@@ -6,9 +6,8 @@ import {styles} from './styles';
 import {useUserHook} from '../../hooks/useUserHook';
 
 export const MemberListItem = (props: any) => {
-  const {_id = '', userSequentialId} = props;
-  const userMemo = useUserHook(null, userSequentialId);
-  const {name, firstName = '', lastName = '', image = ''} = userMemo ?? {};
+  const {_id = '', userSequentialId, user} = props;
+  const {name, firstName = '', lastName = '', image = ''} = user ?? {};
   const fullName = `${name || ''}`;
   const role = '';
   const onPressCallBack = useCallback(() => {

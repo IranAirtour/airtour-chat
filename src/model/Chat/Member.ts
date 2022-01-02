@@ -1,10 +1,10 @@
-import {IServerUserModel} from '../User';
+import {IUserModel} from '../User';
 
-export interface IServerGroupMemberModel {
+export interface IGroupMemberModel {
   id: number;
   sequentialId: number;
   userSequentialId: number;
-  user: IServerUserModel;
+  user: IUserModel;
   groupSequentialId: number;
   isAdmin: boolean;
 }
