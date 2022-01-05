@@ -41,5 +41,4 @@ export type IChatProps = {
   lastSeenMessageId?: number;
   chatEntities?: Dictionary<IMessageModel>;
   downloadedFileIds: Record<string, boolean>;
-  addDownloadedAttachment: Function;
 };
