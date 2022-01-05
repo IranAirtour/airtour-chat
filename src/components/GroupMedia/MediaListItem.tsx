@@ -33,8 +33,12 @@ export const MediaListItem = (props: any) => {
     return formatBytes(size || 0);
   }, [id, size]);
 
-  const time = useMemo(() => {
+  const date = useMemo(() => {
     return DateTimeFormatter.formatDate(sentDate);
+  }, [sentDate]);
+
+  const time = useMemo(() => {
+    return DateTimeFormatter.formatTime(sentDate);
   }, [sentDate]);
 
   const userMemo = useUserHook(null, senderUserId ?? 0);
@@ -124,7 +128,7 @@ export const MediaListItem = (props: any) => {
               {fullName ?? ''}
             </Text>
             <Text h9 numberOfLines={1} style={styles.time}>
-              {time || ''}
+              {date || ''} - {time || ''}
             </Text>
           </View>
         </View>
