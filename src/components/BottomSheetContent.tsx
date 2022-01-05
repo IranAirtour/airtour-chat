@@ -2,6 +2,7 @@ import React, {memo} from 'react';
 import {
   BottomSheetButton,
   Text,
+  Icon,
   flatten,
   GlobalStyles,
 } from 'airtour-components';
@@ -16,16 +17,22 @@ export const BottomSheetContent = memo((props: any) => {
         GlobalStyles.width100,
         {
           backgroundColor: colors.white,
-          height: 140,
+          height: 100,
           paddingHorizontal: 10,
           paddingVertical: 10,
         },
       ])}>
       <BottomSheetButton style={styles.btn} onPress={onReply}>
-        <Text style={styles.title}>Reply</Text>
+        <View style={flatten([GlobalStyles.flexRow, GlobalStyles.fullCenter])}>
+          <Icon name={'reply'} type={'material'} />
+          <Text style={styles.title}>Reply</Text>
+        </View>
       </BottomSheetButton>
       <BottomSheetButton style={styles.btn} onPress={onCopy}>
-        <Text style={styles.title}>Copy Text</Text>
+        <View style={flatten([GlobalStyles.flexRow, GlobalStyles.fullCenter])}>
+          <Icon name={'copy-outline'} type={'ionicon'} />
+          <Text style={styles.title}>Copy Text</Text>
+        </View>
       </BottomSheetButton>
       {/*<Button*/}
       {/*  title={'Delete'}*/}
@@ -34,9 +41,6 @@ export const BottomSheetContent = memo((props: any) => {
       {/*  TouchableComponent={TouchableComponent}*/}
       {/*  onPress={onDelete}*/}
       {/*/>*/}
-      <BottomSheetButton style={styles.btn} onPress={onCancel}>
-        <Text style={styles.title}>Cancel</Text>
-      </BottomSheetButton>
     </View>
   );
 });

@@ -359,7 +359,7 @@ class BaseGiftedChat extends React.Component {
           </View>
           <BottomSheet
             ref={component => (this._actionSheetRef = component)}
-            snapPoints={[-200, 140]}
+            snapPoints={[-200, 100]}
             borderRadius={10}
             renderContent={this.renderBottomSheetContent}
             onOpenEnd={() => {
