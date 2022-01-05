@@ -15,7 +15,8 @@ import {ProgressPercent} from '../ProgressPercent';
 // import {ProgressPercent} from './ProgressPercent';
 
 const BaseMessageFile = memo((props: any) => {
-  const {currentMessage, position, progress, taskId} = props;
+  const {currentMessage, position, progress, taskId, addDownloadedAttachment} =
+    props;
   const extension = currentMessage.file?.extension ?? null;
   const {onFilePress, downloadProgress, downloadTaskId, fileStatus} =
     useDownloadFileHook(props);

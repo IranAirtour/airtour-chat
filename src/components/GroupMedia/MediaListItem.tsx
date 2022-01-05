@@ -13,7 +13,12 @@ import DateTimeFormatter from 'airtour-components/src/utils/DateTimeUtils';
 import {animations} from '../../assets';
 import {useDownloadFileHook} from './useDownloadFileHook';
 
-export const MediaListItem = (props: any) => {
+export const MediaListItem = (props: {
+  groupId: number;
+  file: any;
+  baseUrl: string;
+  addDownloadedAttachment: Function;
+}) => {
   const {groupId, file, baseUrl} = props;
   const {
     id,

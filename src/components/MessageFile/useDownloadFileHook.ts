@@ -1,7 +1,5 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {PermissionHandlerClient} from 'airtour-components/src/utils/PermissionHandler';
-import {useAppDispatch} from '../../redux/store';
-import {addDownloadedAttachment} from '../../redux/slices/groupSlice';
 import {logWarn} from 'airtour-components/src/utils/Logger';
 import {FetchBlobClient} from 'airtour-components/src/utils/FetchBlob';
 import {ToastHandlerClient} from 'airtour-components/src/utils/Toast';
@@ -18,11 +16,10 @@ const IFileResource = {
 };
 
 export const useDownloadFileHook = (props: any) => {
-  const dispatch = useAppDispatch();
   const [taskId, setTaskId] = React.useState<NullableString>(null);
   const [downloadProgress, setDownloadProgress] = useState<NullableNumber>(100);
   const {file} = props?.currentMessage ?? props ?? {};
-  const {downloadedFileIds} = props;
+  const {downloadedFileIds, addDownloadedAttachment} = props;
   const {id: attachmentId, uri, name, type, mimeType} = file ?? {};
   const [fileStatus, setFileStatus] = useState(IFileResource.NOT_EXISTED);
   const fileUri = uri;
@@ -122,7 +119,7 @@ export const useDownloadFileHook = (props: any) => {
         },
       )
         .then(file => {
-          dispatch(addDownloadedAttachment(attachmentId));
+          addDownloadedAttachment(attachmentId);
           setFileStatus(IFileResource.EXISTED);
           openFile(file?.path() || file?.data);
         })

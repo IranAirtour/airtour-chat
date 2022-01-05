@@ -187,6 +187,7 @@ class Bubble extends React.PureComponent<IBubbleProps> {
           {...messageFileProps}
           taskId={this.props.currentMessage?.taskId}
           fileContainerStyle={fileContainerStyle}
+          addDownloadedAttachment={this.props.addDownloadedAttachment}
         />
       );
     }

@@ -2,11 +2,11 @@ import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import FileViewer from 'react-native-file-viewer';
 import {MessageFactory} from '../../Factory/Message';
 import {useAppDispatch} from '../../redux/store';
-import {addDownloadedAttachment} from '../../redux/slices/groupSlice';
 import {FetchBlobClient} from 'airtour-components/src/utils/FetchBlob';
 import {ToastHandlerClient} from 'airtour-components/src/utils/Toast';
 import {PermissionHandlerClient} from 'airtour-components/src/utils/PermissionHandler';
 import {IServerAttachment} from '../../model/ApiModels/Message';
+import {addDownloadedAttachment} from '../../redux/slices/groupSlice';
 
 type NullableString = string | null;
 type NullableNumber = number | null;
@@ -24,10 +24,9 @@ const IFileResource = {
 };
 
 export const useDownloadFileHook = (props: any) => {
-  const dispatch = useAppDispatch();
   const [taskId, setTaskId] = React.useState<NullableString>(null);
   const [downloadProgress, setDownloadProgress] = useState<NullableNumber>(100);
-  const {file, baseUrl} = props ?? {};
+  const {file, baseUrl, addDownloadedAttachment} = props ?? {};
   const fileUri = MessageFactory.generateAttachmentUrl(
     file as IServerAttachment,
     baseUrl,
@@ -125,7 +124,7 @@ export const useDownloadFileHook = (props: any) => {
         },
       )
         .then(file => {
-          dispatch(addDownloadedAttachment(attachmentId));
+          addDownloadedAttachment(attachmentId);
           setFileStatus(IFileResource.EXISTED);
           openFile(file?.path() || file?.data);
         })
