@@ -3,7 +3,6 @@ import {GlobalStyles} from 'airtour-components/src/components/globalStyles';
 import {Text, Avatar} from 'airtour-components';
 import React, {useCallback, useMemo} from 'react';
 import {styles} from './styles';
-import {useUserHook} from '../../hooks/useUserHook';
 
 export const MemberListItem = (props: any) => {
   const {_id = '', userSequentialId, user} = props;

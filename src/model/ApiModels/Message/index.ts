@@ -4,7 +4,6 @@ import {
   INullableNumber,
   INullableString,
 } from '../../IBase';
-import {IUserModel} from '../../User';
 import {IServerUserModel} from '../User';
 
 export interface IServerRepliedToMessage {
@@ -33,7 +32,7 @@ export interface IServerAttachment {
 }
 export interface IServerMessageModel {
   senderUserId: number;
-  senderUser: IUserModel;
+  senderUser: IServerUserModel;
   replyCount: number;
   groupSequentialId: number;
   utcTimestamp: number;

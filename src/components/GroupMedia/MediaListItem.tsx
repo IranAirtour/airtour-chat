@@ -12,7 +12,6 @@ import {formatBytes} from 'airtour-components/src/utils/Other';
 import DateTimeFormatter from 'airtour-components/src/utils/DateTimeUtils';
 import {animations} from '../../assets';
 import {useDownloadFileHook} from './useDownloadFileHook';
-import {useUserHook} from '../../hooks/useUserHook';
 
 export const MediaListItem = (props: any) => {
   const {groupId, file, baseUrl} = props;
@@ -24,7 +23,8 @@ export const MediaListItem = (props: any) => {
     hash = '',
     size = 0,
     messageSequentialId = 0,
-    senderUserId = 0,
+    senderUser,
+    // senderUserId = 0,
     sentDate = '',
   } = file;
   const animRef = useRef<LottieView>(null);
@@ -41,13 +41,13 @@ export const MediaListItem = (props: any) => {
     return DateTimeFormatter.formatTime(sentDate);
   }, [sentDate]);
 
-  const userMemo = useUserHook(null, senderUserId ?? 0);
-  const {
-    name: fullName,
-    firstName = '',
-    lastName = '',
-    avatar = 'https://avatars.githubusercontent.com/u/15344772?v=4',
-  } = userMemo ?? {};
+  // const userMemo = useUserHook(null, senderUserId ?? 0);
+  // const {
+  //   name: fullName,
+  //   firstName = '',
+  //   lastName = '',
+  //   avatar = 'https://avatars.githubusercontent.com/u/15344772?v=4',
+  // } = userMemo ?? {};
 
   const {
     onFilePress,
@@ -125,7 +125,7 @@ export const MediaListItem = (props: any) => {
               },
             ])}>
             <Text h9 numberOfLines={1} style={styles.username}>
-              {fullName ?? ''}
+              {senderUser?.name ?? ''}
             </Text>
             <Text h9 numberOfLines={1} style={styles.time}>
               {date || ''} - {time || ''}

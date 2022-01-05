@@ -21,7 +21,6 @@ import {ExtendedMessageImage} from '../MessageImage/MessageImage';
 import {ExtendedMessageFile} from '../MessageFile/MessageFile';
 import MessageVideo from 'react-native-gifted-chat/lib/MessageVideo';
 import {Time} from '../Time';
-import {useUserHook} from '../../hooks/useUserHook';
 import {IGroupItem} from '../../model/Chat/Group';
 import {IMessage, IMessageModel} from '../../model/Chat/Message';
 import {INavigateToThreadParams} from '../../model/IChatProps';
@@ -295,8 +294,8 @@ const BubbleViewContainer = memo((props: any) => {
 
 const UserProvider: FC<any> = props => {
   const {currentMessage, position} = props;
-  const {userId} = currentMessage;
-  const userMemo = useUserHook(currentMessage?.user, userId);
+  const {user} = currentMessage;
+  // const userMemo = useUserHook(currentMessage?.user, userId);
   // const userMemo = useUserHook(null, userId);
   const isRightPosition = position === 'right';
   return isRightPosition ? null : (
@@ -309,7 +308,7 @@ const UserProvider: FC<any> = props => {
         {color: !isRightPosition ? '#393939' : '#FFF'},
         // usernameStyle,
       ]}>
-      {userMemo?.name || 'Unknown'}
+      {user?.name || 'Unknown'}
     </Text>
   );
 };

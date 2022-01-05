@@ -40,7 +40,7 @@ export class MessageFactory {
       // createdAt: messageDate,
       createdAt: message?.utcTimestamp,
       groupId: message?.groupSequentialId || 0,
-      user: message?.senderUser,
+      user: UserFactory.prepareBaseIUser(message?.senderUser),
       userId: message?.senderUserId,
       replyCount: message?.replyCount || 0,
       taskId: null,
