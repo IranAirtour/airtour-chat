@@ -1,12 +1,10 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import FileViewer from 'react-native-file-viewer';
 import {MessageFactory} from '../../Factory/Message';
-import {useAppDispatch} from '../../redux/store';
 import {FetchBlobClient} from 'airtour-components/src/utils/FetchBlob';
 import {ToastHandlerClient} from 'airtour-components/src/utils/Toast';
 import {PermissionHandlerClient} from 'airtour-components/src/utils/PermissionHandler';
 import {IServerAttachment} from '../../model/ApiModels/Message';
-import {addDownloadedAttachment} from '../../redux/slices/groupSlice';
 
 type NullableString = string | null;
 type NullableNumber = number | null;
