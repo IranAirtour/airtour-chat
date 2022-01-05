@@ -10,6 +10,7 @@ export type IRenderMessageType = {
   currentMessage: IMessageModel;
   retrySendMessage: any;
   downloadedFileIds: Record<string, boolean>;
+  addDownloadedAttachment: Function;
 };
 export const RenderMessage = (props: IRenderMessageType) => {
   const {
@@ -17,6 +18,7 @@ export const RenderMessage = (props: IRenderMessageType) => {
     user: userProfile,
     retrySendMessage,
     downloadedFileIds,
+    addDownloadedAttachment,
   } = props;
 
   const isMyUser = userId === userProfile?._id;
@@ -34,6 +36,7 @@ export const RenderMessage = (props: IRenderMessageType) => {
       position={isMyUser ? 'right' : 'left'}
       retrySendMessage={retrySendMessage}
       downloadedFileIds={downloadedFileIds}
+      addDownloadedAttachment={addDownloadedAttachment}
     />
   );
 };

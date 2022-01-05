@@ -44,6 +44,7 @@ interface IBubbleProps extends React.Props<Bubble> {
   textStyle: LeftRightStyle<TextStyle>;
   bottomContainerStyle: LeftRightStyle<ViewStyle>;
   fileContainerStyle?: StyleProp<ViewStyle>;
+  addDownloadedAttachment?: Function;
   tickStyle: StyleProp<TextStyle>;
   containerToNextStyle: LeftRightStyle<ViewStyle>;
   containerToPreviousStyle: LeftRightStyle<ViewStyle>;

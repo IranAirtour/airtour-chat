@@ -42,6 +42,7 @@ export const ChatComponent = (props: IChatProps) => {
     setReply,
     setFile,
     retrySendMessage,
+    addDownloadedAttachmentCallBack,
   } = chatHookProvider;
   // } = useChatHook();
 
@@ -148,6 +149,7 @@ export const ChatComponent = (props: IChatProps) => {
             onNavigateToThread={onNavigateToThread}
             retrySendMessage={retrySendMessage}
             downloadedFileIds={downloadedFileIds}
+            addDownloadedAttachment={addDownloadedAttachmentCallBack}
           />
         )}
         renderDay={(dayProps: any) => <RenderDay {...dayProps} />}

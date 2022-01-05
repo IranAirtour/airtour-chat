@@ -15,6 +15,7 @@ export type IChatHookProvider = {
   setReply?: Function;
   setFile?: Function;
   retrySendMessage?: Function;
+  addDownloadedAttachmentCallBack?: Function;
 };
 
 export type INavigateToThreadParams = {
