@@ -14,7 +14,6 @@ import {
 } from 'react-native-gesture-handler';
 import emojiRegexCreator from 'emoji-regex';
 import {IMessageModel} from '../../model/Chat/Message';
-import {useUserHook} from '../../hooks/useUserHook';
 import {formatBytes} from 'airtour-components/src/utils/Other';
 import {isIos} from 'airtour-components/src/utils/Platform';
 import {IFileModel} from '../../model/Chat/File';
