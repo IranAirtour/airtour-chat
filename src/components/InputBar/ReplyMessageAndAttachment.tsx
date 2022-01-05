@@ -117,16 +117,17 @@ export const ReplyMessageAndAttachment = memo((props: IProps) => {
   );
 });
 
-const Message = (props: any) => {
+const Message = (props: {chatReplyMessage: IMessageModel}) => {
   const {chatReplyMessage} = props;
+  const {user} = chatReplyMessage;
 
   const isEmojiString = useMemo(() => {
     return emojiRegex?.test(chatReplyMessage?.text ?? '');
   }, [chatReplyMessage]);
-  const userMemo = useUserHook(
-    chatReplyMessage?.user,
-    chatReplyMessage?.userId,
-  );
+  // const userMemo = useUserHook(
+  //   chatReplyMessage?.user,
+  //   chatReplyMessage?.userId,
+  // );
   return (
     <View
       style={flatten([
@@ -147,7 +148,7 @@ const Message = (props: any) => {
           },
         ])}>
         <Text style={{fontSize: 10, color: '#FFC107'}}>
-          {userMemo?.name ?? 'Unknown'}
+          {user?.name ?? 'Unknown'}
         </Text>
         <Text
           style={{
