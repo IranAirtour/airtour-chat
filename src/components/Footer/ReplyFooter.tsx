@@ -39,23 +39,7 @@ const ReplyFooter = memo((props: IProps) => {
     replyMessage,
   } = props;
   const [isShowing, setShowing] = React.useState(true);
-  // const dispatch = useAppDispatch();
-  // const route = useRoute();
-  // const {group} = route?.params;
-  // const groupId = Number(group?._id);
-  // const userProfile: IUserProfile | null = useAppSelector(
-  //   state => state.global.userProfile,
-  // );
-  // const group: IGroupItem | null = useAppSelector(state => state.global.group);
-  // const replyAttachmentFile: IFileModel | null = useAppSelector(
-  //   state => state.chat.replyFile,
-  // );
-  // const replyAttachmentImage: IImageAssetModel | null = useAppSelector(
-  //   state => state.chat.replyImage,
-  // );
-  // const replyMessage: IMessageModel | null = useAppSelector(
-  //   state => state.chat.reply,
-  // );
+
   const useReplyAttachmentPayload = useMemo(() => {
     const payload: IReplyContentMessage = {
       currentMessage: {

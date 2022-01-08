@@ -30,9 +30,6 @@ export const useDownloadFileHook = (props: any) => {
       FetchBlobClient.ChatPath + attachmentId + '.' + (type || mimeType || ''),
     [attachmentId],
   );
-  // const downloadedFileIds = useAppSelector(
-  //   state => state.group.downloadedFileIds,
-  // );
 
   const isFileDownloaded = useMemo(() => {
     return downloadedFileIds.hasOwnProperty(attachmentId);

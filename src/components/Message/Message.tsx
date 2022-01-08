@@ -185,11 +185,6 @@ const MessageViewContainer: FC<any> = props => {
     renderTime,
   } = props;
   const {user} = currentMessage;
-  // const userMemo = useUserHook(currentMessage?.user, userId);
-  // const userMemo = useUserHook(null, userId);
-  // const userProfile: IUserProfile | null = useAppSelector(
-  //   state => state.global.userProfile,
-  // );
   const isMyUser = user?._id === myUser?._id || !isLeftPosition;
   const sameUser = isSameUser(currentMessage, nextMessage);
   const shouldHaveTopBorderRadius = isSameUser(currentMessage, previousMessage);

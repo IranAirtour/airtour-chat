@@ -36,12 +36,6 @@ const ScreenHeader: React.FC<IHeaderProps> = (props: IHeaderProps) => {
   const {_id, title = '', icon, membersCount} = group || {};
   const themeColors = useThemeColors();
 
-  // const groupMembersMemo = useMemo(() => {
-  //   return groupMemberSelectors
-  //     .selectAll(store.getState())
-  //     .filter(value => value.groupSequentialId === group?._id);
-  // }, [group?._id]);
-
   const avatarTitle = useMemo(() => {
     const titleArray = title?.split(' ') || '';
     return titleArray[0] || '' + titleArray[1] || '';

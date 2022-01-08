@@ -54,20 +54,6 @@ export const ChatComponent = (props: IChatProps) => {
     fileBottomSheetAnimatedValue,
   } = useFileSheet();
 
-  // TEMP: update received userProfile from props to app global slice to use in chat app.
-  // useEffect(() => {
-  //   dispatch(userProfileReceived({userProfile}));
-  // }, [userProfile]);
-
-  // TEMP: update received userList from props to app user slice to use in chat app.
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     dispatch(usersReceived({list: userList}));
-  //   }, 1000);
-  // }, [userList]);
-
-  // const chatReplyMessage = useAppSelector(state => state.chat.reply);
-  // const chatReplyAttachment = useAppSelector(state => state.chat.replyFile);
   const onStartReached = useCallback(() => {
     return new Promise(resolve => {
       onRefreshCallback(messages as IMessageModel[]).finally(() =>
@@ -80,12 +66,6 @@ export const ChatComponent = (props: IChatProps) => {
       onLoadMore(true, messages).finally(() => resolve(true));
     });
   }, [messages]);
-
-  // const lastSeenMessageId =
-  //   useAppSelector(
-  //     state => state.group.entities[String(groupId)]?.lastSeenMessageId,
-  //   ) ?? null;
-  // const entities = useAppSelector(state => state.chat.entities);
 
   const onViewableItemsChangedCallBack = useCallback(
     (messageIdToSetSeen: number) => {
