@@ -1,10 +1,8 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import FileViewer from 'react-native-file-viewer';
-import {MessageFactory} from '../../Factory/Message';
 import {FetchBlobClient} from 'airtour-components/src/utils/FetchBlob';
 import {ToastHandlerClient} from 'airtour-components/src/utils/Toast';
 import {PermissionHandlerClient} from 'airtour-components/src/utils/PermissionHandler';
-import {IServerAttachment} from '../../model/ApiModels/Message';
 
 type NullableString = string | null;
 type NullableNumber = number | null;
@@ -24,11 +22,7 @@ const IFileResource = {
 export const useDownloadFileHook = (props: any) => {
   const [taskId, setTaskId] = React.useState<NullableString>(null);
   const [downloadProgress, setDownloadProgress] = useState<NullableNumber>(100);
-  const {file, baseUrl, addDownloadedAttachment} = props ?? {};
-  const fileUri = MessageFactory.generateAttachmentUrl(
-    file as IServerAttachment,
-    baseUrl,
-  );
+  const {file, addDownloadedAttachment} = props ?? {};
   const [fileStatus, setFileStatus] = useState<IFileStatus>(
     IFileResource.NOT_EXISTED,
   );
@@ -104,7 +98,7 @@ export const useDownloadFileHook = (props: any) => {
     } else {
       FetchBlobClient.downloadManager(
         {
-          url: fileUri,
+          url: file?.thumbnailUrl ?? '',
         },
         {
           fileName: attachmentId,
@@ -134,7 +128,7 @@ export const useDownloadFileHook = (props: any) => {
           setDownloadProgress(null);
         });
     }
-  }, [taskId, fileUri]);
+  }, [taskId]);
 
   const useDownloadFileProvider = () => {
     return {

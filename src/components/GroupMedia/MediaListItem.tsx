@@ -16,7 +16,6 @@ import {useDownloadFileHook} from './useDownloadFileHook';
 export const MediaListItem = (props: {
   groupId: number;
   file: any;
-  baseUrl: string;
   addDownloadedAttachment: Function;
 }) => {
   const {groupId, file, baseUrl} = props;
