@@ -30,6 +30,7 @@ export const RenderInputToolbar = (props: any) => {
     setFile,
     appendReplyToMessage,
     showInputBar = true,
+    canSend = false,
     snapFileBottomSheetTo,
   } = props;
   const showReplyMessage = Boolean(
@@ -233,7 +234,11 @@ export const RenderInputToolbar = (props: any) => {
             }}
           />
         </View>
-        <View style={flatten([GlobalStyles.justifyEnd, {marginStart: 8}])}>
+        <View
+          style={flatten([
+            GlobalStyles.justifyEnd,
+            {opacity: canSend ? 1 : 0.5, marginStart: 8},
+          ])}>
           <Button
             icon={
               <Icon
@@ -250,6 +255,7 @@ export const RenderInputToolbar = (props: any) => {
                 width: 40,
                 height: 40,
                 backgroundColor: '#153D76',
+                opacity: 0,
                 borderRadius: 20,
                 padding: 0,
               },
@@ -257,7 +263,11 @@ export const RenderInputToolbar = (props: any) => {
             // TouchableComponent={
             //   isIos ? TouchableOpacity : TouchableNativeFeedback
             // }
-            onPress={sendMessage}
+            onPress={() => {
+              if (canSend) {
+                sendMessage();
+              }
+            }}
           />
         </View>
       </View>

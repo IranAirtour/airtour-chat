@@ -29,7 +29,8 @@ export const ChatComponent = (props: IChatProps) => {
     downloadedFileIds,
   } = props;
 
-  const groupId = Number(group?._id);
+  const isActiveMessage =
+    messages.filter(item => item.sent === false).length > 0;
 
   const {
     chatInputText,
@@ -117,6 +118,7 @@ export const ChatComponent = (props: IChatProps) => {
             setReply={setReply}
             setFile={setFile}
             appendReplyToMessage={true}
+            canSend={!isActiveMessage}
             showInputBar={writable}
             snapFileBottomSheetTo={snapFileBottomSheetTo}
           />
