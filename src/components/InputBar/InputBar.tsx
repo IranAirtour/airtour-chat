@@ -63,16 +63,17 @@ export const RenderInputToolbar = (props: any) => {
         _id: newMessageRandomId,
         tempId: newMessageRandomId,
       };
+      clearInputBar();
       onSend?.(newMessage, appendReplyToMessage);
-      scrollToBottom();
-      await sleep(100);
-      InteractionManager.runAfterInteractions(() => {
-        onInputTextChanged('');
-        setReply(null);
-        setFile(null);
-        SimpleLayoutAnimations.easeInOut();
-        // scrollToEndTime.current = setTimeout(() => scrollToBottom(), 500);
-      });
+      // scrollToBottom();
+      // await sleep(100);
+      // InteractionManager.runAfterInteractions(() => {
+      //   // onInputTextChanged('');
+      //   setReply(null);
+      //   setFile(null);
+      //   SimpleLayoutAnimations.easeInOut();
+      //   // scrollToEndTime.current = setTimeout(() => scrollToBottom(), 500);
+      // });
     });
   }, [
     inputText,
@@ -105,6 +106,13 @@ export const RenderInputToolbar = (props: any) => {
     });
     return () => task.cancel();
   }, []);
+
+  const clearInputBar = () => {
+    onInputTextChanged('');
+    setReply(null);
+    setFile(null);
+    SimpleLayoutAnimations.easeInOut();
+  };
 
   /**
    show keyboard when reply on a message
