@@ -255,7 +255,6 @@ export const RenderInputToolbar = (props: any) => {
                 width: 40,
                 height: 40,
                 backgroundColor: '#153D76',
-                opacity: 0,
                 borderRadius: 20,
                 padding: 0,
               },
