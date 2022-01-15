@@ -46,15 +46,20 @@ export const useDownloadFileHook = (props: any) => {
   const onFilePress = useCallback(() => {
     logWarn(pathToFile, 'AttachmentId');
     requestStoragePermissions();
-    isFileExists(pathToFile).then(isExist => {
-      // logWarn(fullName,pathToFile,fullName)
-      if (isExist) {
-        openFile(pathToFile);
-      } else {
-        downloadFile();
-      }
-    });
-  }, [pathToFile, fullName]);
+    if (fileStatus === IFileResource.EXISTED) {
+      openFile(pathToFile);
+    } else {
+      downloadFile();
+    }
+    // isFileExists(pathToFile).then(isExist => {
+    //   // logWarn(fullName,pathToFile,fullName)
+    //   if (isExist) {
+    //     openFile(pathToFile);
+    //   } else {
+    //     downloadFile();
+    //   }
+    // });
+  }, [pathToFile, fullName, fileStatus]);
 
   const requestStoragePermissions = useCallback(async () => {
     try {
@@ -82,17 +87,20 @@ export const useDownloadFileHook = (props: any) => {
 
   const openFile = useCallback(
     fileToOpen => {
-      FileViewerClient.openFile(fileToOpen || pathToFile).catch(() => {
-        ToastHandlerClient.show('format denied');
-      });
+      if (fileStatus === IFileResource.EXISTED) {
+        FileViewerClient.openFile(fileToOpen || pathToFile).catch(() => {
+          ToastHandlerClient.show('format denied');
+        });
+      }
     },
-    [pathToFile],
+    [pathToFile, fileStatus],
   );
 
   const downloadFile = useCallback(() => {
     setFileStatus(IFileResource.DOWNLOADING);
     if (taskId) {
       FetchBlobClient.cancelTask(taskId);
+      setFileStatus(IFileResource.NOT_EXISTED);
       setTaskId(null);
       return;
     } else {
@@ -111,17 +119,21 @@ export const useDownloadFileHook = (props: any) => {
           setFileStatus(IFileResource.DOWNLOADING);
         },
         id => {
-          // alert(id);
           setTaskId(id);
         },
       )
         .then(file => {
           addDownloadedAttachment(attachmentId);
           setFileStatus(IFileResource.EXISTED);
-          openFile(file?.path() || file?.data);
+          // openFile(file?.path() || file?.data);
         })
         .catch(e => {
-          setFileStatus(IFileResource.DOWNLOAD_FAILED);
+          if (e?.toString().includes('canceled')) {
+            setFileStatus(IFileResource.NOT_EXISTED);
+          } else {
+            setFileStatus(IFileResource.DOWNLOAD_FAILED);
+          }
+          FetchBlobClient.deleteFile(pathToFile);
         })
         .finally(() => {
           setTaskId(null);
