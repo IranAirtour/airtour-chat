@@ -20,9 +20,15 @@ export const useDownloadFileHook = (props: any) => {
   const [downloadProgress, setDownloadProgress] = useState<NullableNumber>(100);
   const {file} = props?.currentMessage ?? props ?? {};
   const {downloadedFileIds, addDownloadedAttachment} = props;
-  const {id: attachmentId, uri, name, type, mimeType} = file ?? {};
+  const {
+    id: attachmentId,
+    uri: fileUri,
+    name,
+    type,
+    mimeType,
+    size,
+  } = file ?? {};
   const [fileStatus, setFileStatus] = useState(IFileResource.NOT_EXISTED);
-  const fileUri = uri;
   const fullName = (name || '') + '.' + (type || mimeType || '');
   // const fullName = (name || '') + '.' + (type || mimeType || '');
   const pathToFile: string = useMemo(
@@ -113,6 +119,7 @@ export const useDownloadFileHook = (props: any) => {
           fileName: attachmentId,
           mimeType: (mimeType || type || 'txt') as string,
           pathToDownload: pathToFile,
+          fileSize: size,
         },
         (percent: number) => {
           setDownloadProgress(percent);
