@@ -26,7 +26,7 @@ export const useDownloadFileHook = (props: any) => {
   const [fileStatus, setFileStatus] = useState<IFileStatus>(
     IFileResource.NOT_EXISTED,
   );
-  const {id: attachmentId, name, type, mimeType} = file ?? {};
+  const {id: attachmentId, name, type, mimeType, size} = file ?? {};
 
   const fullName = (name || '') + '.' + (type || mimeType || '');
 
@@ -105,6 +105,7 @@ export const useDownloadFileHook = (props: any) => {
           // fileName: name,
           mimeType: (mimeType || type || 'txt') as string,
           pathToDownload: pathToFile,
+          fileSize: size,
         },
         (percent: number) => {
           setDownloadProgress(percent);
