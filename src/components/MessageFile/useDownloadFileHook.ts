@@ -58,14 +58,13 @@ export const useDownloadFileHook = (props: any) => {
       downloadFile();
     }
     // isFileExists(pathToFile).then(isExist => {
-    //   // logWarn(fullName,pathToFile,fullName)
     //   if (isExist) {
     //     openFile(pathToFile);
     //   } else {
     //     downloadFile();
     //   }
     // });
-  }, [pathToFile, fullName, fileStatus]);
+  }, [pathToFile, fileStatus]);
 
   const requestStoragePermissions = useCallback(async () => {
     try {

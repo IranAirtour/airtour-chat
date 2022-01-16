@@ -3,6 +3,8 @@ import FileViewer from 'react-native-file-viewer';
 import {FetchBlobClient} from 'airtour-components/src/utils/FetchBlob';
 import {ToastHandlerClient} from 'airtour-components/src/utils/Toast';
 import {PermissionHandlerClient} from 'airtour-components/src/utils/PermissionHandler';
+import {FileViewerClient} from 'airtour-components/src/utils/FileViewer';
+import {logWarn} from "airtour-components/src/utils/Logger";
 
 type NullableString = string | null;
 type NullableNumber = number | null;
@@ -46,16 +48,21 @@ export const useDownloadFileHook = (props: any) => {
   }, [pathToFile]);
 
   const onFilePress = useCallback(() => {
+    logWarn(pathToFile, 'AttachmentId');
     requestStoragePermissions();
-    isFileExists(pathToFile).then(isExist => {
-      // logWarn(fullName,pathToFile,fullName)
-      if (isExist) {
-        openFile(pathToFile);
-      } else {
-        downloadFile();
-      }
-    });
-  }, [pathToFile, fullName]);
+    if (fileStatus === IFileResource.EXISTED) {
+      openFile(pathToFile);
+    } else {
+      downloadFile();
+    }
+    // isFileExists(pathToFile).then(isExist => {
+    //   if (isExist) {
+    //     openFile(pathToFile);
+    //   } else {
+    //     downloadFile();
+    //   }
+    // });
+  }, [pathToFile, fileStatus]);
 
   const requestStoragePermissions = useCallback(async () => {
     try {
@@ -84,12 +91,12 @@ export const useDownloadFileHook = (props: any) => {
   const openFile = useCallback(
     fileToOpen => {
       if (fileStatus === IFileResource.EXISTED) {
-        FileViewer.open(fileToOpen || pathToFile).catch(() => {
+        FileViewerClient.openFile(fileToOpen || pathToFile).catch(() => {
           ToastHandlerClient.show('format denied');
         });
       }
     },
-    [fileStatus, pathToFile],
+    [pathToFile, fileStatus],
   );
 
   const downloadFile = useCallback(() => {
