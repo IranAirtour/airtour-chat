@@ -4,7 +4,7 @@ import {FetchBlobClient} from 'airtour-components/src/utils/FetchBlob';
 import {ToastHandlerClient} from 'airtour-components/src/utils/Toast';
 import {PermissionHandlerClient} from 'airtour-components/src/utils/PermissionHandler';
 import {FileViewerClient} from 'airtour-components/src/utils/FileViewer';
-import {logWarn} from "airtour-components/src/utils/Logger";
+import {logWarn} from 'airtour-components/src/utils/Logger';
 
 type NullableString = string | null;
 type NullableNumber = number | null;
