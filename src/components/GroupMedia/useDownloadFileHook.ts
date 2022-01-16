@@ -17,6 +17,7 @@ const IFileResource = {
   NOT_EXISTED: {color: '#1CA35A', icon: 'download-outline'},
   EXISTED: {color: '#7879F1', icon: 'checkmark'},
   DOWNLOADING: {color: '#F178B6', icon: ''},
+  DOWNLOAD_FAILED: {icon: 'reload'},
 };
 
 export const useDownloadFileHook = (props: any) => {
@@ -82,17 +83,20 @@ export const useDownloadFileHook = (props: any) => {
 
   const openFile = useCallback(
     fileToOpen => {
-      FileViewer.open(fileToOpen || pathToFile).catch(() => {
-        ToastHandlerClient.show('format denied');
-      });
+      if (fileStatus === IFileResource.EXISTED) {
+        FileViewer.open(fileToOpen || pathToFile).catch(() => {
+          ToastHandlerClient.show('format denied');
+        });
+      }
     },
-    [pathToFile],
+    [fileStatus, pathToFile],
   );
 
   const downloadFile = useCallback(() => {
     setFileStatus(IFileResource.DOWNLOADING);
     if (taskId) {
       FetchBlobClient.cancelTask(taskId);
+      setFileStatus(IFileResource.NOT_EXISTED);
       setTaskId(null);
       return;
     } else {
@@ -119,10 +123,15 @@ export const useDownloadFileHook = (props: any) => {
         .then(file => {
           addDownloadedAttachment(attachmentId);
           setFileStatus(IFileResource.EXISTED);
-          openFile(file?.path() || file?.data);
+          // openFile(file?.path() || file?.data);
         })
         .catch(e => {
-          setFileStatus(IFileResource.NOT_EXISTED);
+          if (e?.toString().includes('canceled')) {
+            setFileStatus(IFileResource.NOT_EXISTED);
+          } else {
+            setFileStatus(IFileResource.DOWNLOAD_FAILED);
+          }
+          FetchBlobClient.deleteFile(pathToFile);
         })
         .finally(() => {
           setTaskId(null);
