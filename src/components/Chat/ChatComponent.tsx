@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {IChatProps} from '../../model/IChatProps';
 import {GiftedChat} from '../GiftedChat/GiftedChat';
 import {RenderInputToolbar} from '../InputBar/InputBar';
@@ -29,8 +29,13 @@ export const ChatComponent = (props: IChatProps) => {
     downloadedFileIds,
   } = props;
 
-  const isActiveMessage =
-    messages.filter(item => item.sent === false).length > 0;
+  const [canSend, setCanSend] = useState<boolean>(false);
+
+  useEffect(() => {
+    const isActiveMessage =
+      messages.filter(item => item.sent === false).length > 0;
+    setCanSend(!isActiveMessage);
+  }, [messages]);
 
   const {
     chatInputText,
@@ -118,7 +123,8 @@ export const ChatComponent = (props: IChatProps) => {
             setReply={setReply}
             setFile={setFile}
             appendReplyToMessage={true}
-            canSend={!isActiveMessage}
+            canSend={canSend}
+            setCanSend={setCanSend}
             showInputBar={writable}
             snapFileBottomSheetTo={snapFileBottomSheetTo}
           />

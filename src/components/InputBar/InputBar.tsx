@@ -15,7 +15,6 @@ import {SimpleLayoutAnimations} from 'airtour-components/src/utils/SimpleLayoutA
 import {randomId} from 'airtour-components/src/utils/RandomId';
 import {sleep} from 'airtour-components/src/utils/AsyncUtils';
 import {IMessageModel} from '../../model/Chat/Message';
-// import {useChatHook} from '../../hooks/useChatHook';
 const INPUT_RADIUS = 25;
 
 export const RenderInputToolbar = (props: any) => {
@@ -31,6 +30,7 @@ export const RenderInputToolbar = (props: any) => {
     appendReplyToMessage,
     showInputBar = true,
     canSend = false,
+    setCanSend,
     snapFileBottomSheetTo,
   } = props;
   const showReplyMessage = Boolean(
@@ -45,35 +45,26 @@ export const RenderInputToolbar = (props: any) => {
     SimpleLayoutAnimations.easeInOut();
   }, [setReply]);
   const inputRef = useRef<any>(null);
-  const sendMessage = useCallback(() => {
+  const sendMessage = useCallback(async () => {
     const trimText = inputText?.trim();
     if (!trimText?.length && !chatReplyAttachment) {
       return;
     }
+    setCanSend(false);
+    clearInputBar();
+    const newMessageRandomId = randomId<number>(false);
+    const newMessage: Partial<IMessageModel> = {
+      text: trimText ?? '',
+      file: chatReplyAttachment,
+      replyToId: chatReplyMessage?._id ?? null,
+      replyTo: chatReplyMessage ?? null,
+      _id: newMessageRandomId,
+      tempId: newMessageRandomId,
+    };
+    onSend?.(newMessage, appendReplyToMessage);
+    await sleep(2000);
     InteractionManager.runAfterInteractions(() => {
       scrollToBottom();
-    }).then(async () => {
-      await sleep(100);
-      const newMessageRandomId = randomId<number>(false);
-      const newMessage: Partial<IMessageModel> = {
-        text: trimText ?? '',
-        file: chatReplyAttachment,
-        replyToId: chatReplyMessage?._id ?? null,
-        replyTo: chatReplyMessage ?? null,
-        _id: newMessageRandomId,
-        tempId: newMessageRandomId,
-      };
-      clearInputBar();
-      onSend?.(newMessage, appendReplyToMessage);
-      // scrollToBottom();
-      // await sleep(100);
-      // InteractionManager.runAfterInteractions(() => {
-      //   // onInputTextChanged('');
-      //   setReply(null);
-      //   setFile(null);
-      //   SimpleLayoutAnimations.easeInOut();
-      //   // scrollToEndTime.current = setTimeout(() => scrollToBottom(), 500);
-      // });
     });
   }, [
     inputText,
@@ -86,6 +77,49 @@ export const RenderInputToolbar = (props: any) => {
     setFile,
     scrollToBottom,
   ]);
+
+  // const sendMessage = useCallback(() => {
+  //   const trimText = inputText?.trim();
+  //   if (!trimText?.length && !chatReplyAttachment) {
+  //     return;
+  //   }
+  //   InteractionManager.runAfterInteractions(() => {
+  //     scrollToBottom();
+  //   }).then(async () => {
+  //     await sleep(100);
+  //     const newMessageRandomId = randomId<number>(false);
+  //     const newMessage: Partial<IMessageModel> = {
+  //       text: trimText ?? '',
+  //       file: chatReplyAttachment,
+  //       replyToId: chatReplyMessage?._id ?? null,
+  //       replyTo: chatReplyMessage ?? null,
+  //       _id: newMessageRandomId,
+  //       tempId: newMessageRandomId,
+  //     };
+  //     clearInputBar();
+  //     onSend?.(newMessage, appendReplyToMessage);
+  //     // scrollToBottom();
+  //     // await sleep(100);
+  //     // InteractionManager.runAfterInteractions(() => {
+  //     //   // onInputTextChanged('');
+  //     //   setReply(null);
+  //     //   setFile(null);
+  //     //   SimpleLayoutAnimations.easeInOut();
+  //     //   // scrollToEndTime.current = setTimeout(() => scrollToBottom(), 500);
+  //     // });
+  //   });
+  // }, [
+  //   inputText,
+  //   chatReplyAttachment,
+  //   chatReplyMessage,
+  //   onSend,
+  //   appendReplyToMessage,
+  //   onInputTextChanged,
+  //   setReply,
+  //   setFile,
+  //   scrollToBottom,
+  // ]);
+
   // useEffect(() => {
   //   return () => {
   //     // clearTimeout(scrollToEndTime.current);
@@ -159,7 +193,7 @@ export const RenderInputToolbar = (props: any) => {
             multiline={true}
             ref={inputRef}
             value={inputText}
-            onChangeText={onInputTextChanged}
+            onChangeText={canSend ? onInputTextChanged : null}
             placeholder={'Write Something ....'}
             placeholderTextColor={'#8994AD'}
             autoCapitalize={'none'}
